@@ -1,4 +1,6 @@
-﻿namespace Labb4
+﻿using System;
+
+namespace Labb4
 {
     internal class Player
     {
@@ -12,7 +14,9 @@
             this.Name = name;
         }
 
-
-
+        internal void Play()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
