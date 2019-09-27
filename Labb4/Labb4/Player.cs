@@ -7,7 +7,7 @@
         int StartPositionRow = 3;
         int StartPositionColumn = 3;
 
-        public Player(string name)
+        public Player(string name, int score = 100)
         {
             this.Name = name;
         }
