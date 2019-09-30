@@ -32,7 +32,7 @@ namespace Labb4
         }
 
         public void CreateObjects()
-        {            
+        {
             Box box;
             for (int row = 0; row < map.GetLength(0); row++)
             {
@@ -66,12 +66,11 @@ namespace Labb4
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
                     map[startPositionRow, startPositionCol].Symbol = '@';
-                    Console.Write(map[row, col].Symbol + " ");                    
+                    Console.Write(map[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
-            }            
+            }
         }
-
         public void Play()
         {
             Console.Clear();
@@ -83,7 +82,7 @@ namespace Labb4
             {
                 case 'w':
                     mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    startPositionRow--;                    
+                    startPositionRow--;
                     break;
                 case 'a':
                     mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';

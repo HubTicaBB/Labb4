@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Labb4
+﻿namespace Labb4
 {
     class Wall : Box
     {
@@ -12,5 +6,10 @@ namespace Labb4
         {
             this.Symbol = symbol;
         }
+        public override bool IsBoxAvailable()
+        {
+            return false;
+        }
+
     }
 }

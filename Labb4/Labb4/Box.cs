@@ -1,6 +1,6 @@
 ﻿namespace Labb4
 {
-    internal abstract class Box
+    internal abstract class Box : IsAvailable
     {
         public char Symbol { get; set; }
 
@@ -8,10 +8,6 @@
         {
             this.Symbol = symbol;
         }
-
-        public override string ToString()
-        {
-            return $"{Symbol}";
-        }
+        public abstract bool IsBoxAvailable();
     }
 }

@@ -7,6 +7,7 @@ namespace Labb4
     {
         static void Main(string[] args)
         {
+
             List<Player> players = new List<Player>();
             players.Add(new Player("Andreea"));
             players.Add(new Player("Tijana"));
@@ -25,7 +26,7 @@ namespace Labb4
                     players[players.Count - 1].Play();
                     // om antal drag == 0 --> play = false;
                     // om objektet är Exit --> play = false
-                }                
+                }
 
                 Console.WriteLine("Does anyone else want to play? (yes/no)");
                 string answer = Console.ReadLine();
