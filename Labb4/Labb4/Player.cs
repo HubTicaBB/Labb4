@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Labb4
@@ -6,6 +7,7 @@ namespace Labb4
 {
     internal class Player
     {
+        public List<Key> items = new List<Key>();
         public string Name { get; set; }
         public int Score { get; set; }
         int startPositionRow = 3;
@@ -92,20 +94,23 @@ namespace Labb4
             Console.WriteLine("Instructions");
             Console.Write("Control: ");
             ConsoleKeyInfo control = Console.ReadKey();
+
+
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    if (mapWithObjects[startPositionRow - 1, startPositionCol].IsBoxAvailable())
-                    {
-                        mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                        startPositionRow--;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nYou reached the wall of the dungeon. Try another command!");
-                        Thread.Sleep(2000);
-                        return;
-                    }    
+                    ChangePosition(startPositionRow - 1, startPositionCol);
+                    //if (mapWithObjects[startPositionRow - 1, startPositionCol].IsBoxAvailable())
+                    //{
+                    //    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                    //    startPositionRow--;
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("\nYou reached the wall of the dungeon. Try another command!");
+                    //    Thread.Sleep(2000);
+                    //    return;
+                    //}
                     break;
                 case 'a':
                     mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
@@ -125,6 +130,45 @@ namespace Labb4
                 default:
                     Console.Write("\nInvalid input, try again: ");
                     break;
+            }
+        }
+
+        public void ChangePosition(int rowPosition, int colPosition)
+        {
+            if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
+            {
+                mapWithObjects[rowPosition, colPosition].Symbol = '-';
+                startPositionRow--;
+            }
+            else
+
+            {
+                if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Wall))
+                {
+                    Console.WriteLine($"\nYou reached a wall. Try another command!");
+                    Thread.Sleep(2000);
+                }
+
+                else if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Door))
+                {
+                    bool IsKeyAvailable = false;
+                    foreach (var item in items)
+                    {
+
+                        if (item.GetType() == typeof(Key))
+                        {
+                            mapWithObjects[rowPosition, colPosition].Symbol = '-';
+                            startPositionRow--;
+                            IsKeyAvailable = true;
+                            break;
+                        }
+                    }
+                    if (!IsKeyAvailable)
+                    {
+                        Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
+                        Thread.Sleep(2000);
+                    }
+                }
             }
         }
     }
