@@ -95,34 +95,19 @@ namespace Labb4
             Console.Write("Control: ");
             ConsoleKeyInfo control = Console.ReadKey();
 
-
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(startPositionRow - 1, startPositionCol);
-                    //if (mapWithObjects[startPositionRow - 1, startPositionCol].IsBoxAvailable())
-                    //{
-                    //    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    //    startPositionRow--;
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("\nYou reached the wall of the dungeon. Try another command!");
-                    //    Thread.Sleep(2000);
-                    //    return;
-                    //}
+                    ChangePosition(startPositionRow - 1, startPositionCol);                   
                     break;
                 case 'a':
-                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    startPositionCol--;
+                    ChangePosition(startPositionRow, startPositionCol - 1);
                     break;
                 case 's':
-                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    startPositionRow++;
+                    ChangePosition(startPositionRow + 1, startPositionCol);
                     break;
                 case 'd':
-                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    startPositionCol++;
+                    ChangePosition(startPositionRow, startPositionCol + 1);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -132,21 +117,18 @@ namespace Labb4
                     break;
             }
         }
-
         public void ChangePosition(int rowPosition, int colPosition)
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                mapWithObjects[rowPosition, colPosition].Symbol = '-';
-                startPositionRow--;
+                DoChange(rowPosition, colPosition);
             }
             else
-
             {
                 if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Wall))
                 {
                     Console.WriteLine($"\nYou reached a wall. Try another command!");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1200);
                 }
 
                 else if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Door))
@@ -154,11 +136,9 @@ namespace Labb4
                     bool IsKeyAvailable = false;
                     foreach (var item in items)
                     {
-
                         if (item.GetType() == typeof(Key))
                         {
-                            mapWithObjects[rowPosition, colPosition].Symbol = '-';
-                            startPositionRow--;
+                            DoChange(rowPosition, colPosition);
                             IsKeyAvailable = true;
                             break;
                         }
@@ -166,10 +146,16 @@ namespace Labb4
                     if (!IsKeyAvailable)
                     {
                         Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
-                        Thread.Sleep(2000);
+                        Thread.Sleep(1200);
                     }
                 }
             }
+        }
+        public void DoChange(int rowPosition, int colPosition)
+        {
+            mapWithObjects[rowPosition, colPosition].Symbol = '-';
+            startPositionRow = rowPosition;
+            startPositionCol = colPosition;
         }
     }
 }
