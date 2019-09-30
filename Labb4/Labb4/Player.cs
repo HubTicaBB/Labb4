@@ -5,13 +5,13 @@ namespace Labb4
 {
     internal class Player
     {
+        char symbol = '@';
         public string Name { get; set; }
         public int Score { get; set; }
         int startPositionRow = 3;
         int startPositionCol = 3;
 
-        char[,] mapLayout = new char[,]
-
+        char[,] map = new char[,]
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -24,41 +24,86 @@ namespace Labb4
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         };
+        Box[,] mapWithObjects = new Box[10, 10];
 
         public Player(string name, int score = 100)
         {
             this.Name = name;
         }
 
-        public static void StartMap(char[,] map, int startPositionRow, int startPositionCol)
-        {
+        public void CreateObjects()
+        {            
+            Box box;
             for (int row = 0; row < map.GetLength(0); row++)
             {
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
-
-                    if ((row == startPositionRow) && (col == startPositionCol))
-                        map[row, col] = '@';
+                    if (map[row, col] == '#')
+                    {
+                        box = new Wall('#');
+                    }
+                    else if (map[row, col] == '-')
+                    {
+                        box = new Room('-');
+                    }
+                    else if (map[row, col] == 'D')
+                    {
+                        box = new Door('D');
+                    }
+                    else
+                    {
+                        box = new Exit('E');
+                    }
+                    mapWithObjects[row, col] = box;
                 }
             }
-            PrintMap(map);
         }
-        public static void PrintMap(char[,] map)
+
+        public static void StartMap(Box[,] map, int startPositionRow, int startPositionCol)
         {
             for (int row = 0; row < map.GetLength(0); row++)
             {
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
-                    Console.Write(map[row, col] + " ");
+                    map[startPositionRow, startPositionCol].Symbol = '@';
+                    Console.Write(map[row, col].Symbol + " ");                    
                 }
                 Console.WriteLine();
-            }
+            }            
         }
 
         public void Play()
         {
-            StartMap(mapLayout, startPositionRow, startPositionCol);
-            Console.WriteLine("play");
+            Console.Clear();
+            StartMap(mapWithObjects, startPositionRow, startPositionCol);
+            Console.WriteLine("Instructions");
+            Console.Write("Control: ");
+            ConsoleKeyInfo control = Console.ReadKey();
+            switch (Char.ToLower(control.KeyChar))
+            {
+                case 'w':
+                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                    startPositionRow--;                    
+                    break;
+                case 'a':
+                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                    startPositionCol--;
+                    break;
+                case 's':
+                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                    startPositionRow++;
+                    break;
+                case 'd':
+                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                    startPositionCol++;
+                    break;
+                case 'q':
+                    Console.WriteLine("\n\nGame over!");
+                    return;
+                default:
+                    Console.Write("\nInvalid input, try again: ");
+                    break;
+            }
         }
     }
 }

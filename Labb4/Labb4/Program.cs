@@ -18,8 +18,14 @@ namespace Labb4
                 Console.Write("Enter your name: ");
                 string name = Console.ReadLine();
                 // TODO: Validera namnet
-                players.Add(new Player(name));
-                players[players.Count - 1].Play();
+                players.Add(new Player(name, '@'));
+                while (play)
+                {
+                    players[players.Count - 1].CreateObjects();
+                    players[players.Count - 1].Play();
+                    // om antal drag == 0 --> play = false;
+                    // om objektet är Exit --> play = false
+                }                
 
                 Console.WriteLine("Does anyone else want to play? (yes/no)");
                 string answer = Console.ReadLine();
