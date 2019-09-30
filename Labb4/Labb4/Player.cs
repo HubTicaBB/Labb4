@@ -16,7 +16,7 @@ namespace Labb4
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -41,17 +41,23 @@ namespace Labb4
                     {
                         box = new Wall('#');
                     }
-                    else if (map[row, col] == '-' || map[row, col] == 'M')
+                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k')
                     {
                         if (map[row, col] == 'M')
                         {
                             Monster monster = new Monster();
                             box = new Room('M', monster);
                         }
+                        else if (map[row, col] == 'k')
+                        {
+                            Key key = new Key();
+                            box = new Room('k', key);
+                        }
                         else
                         {
                             box = new Room('-');
                         }
+
                     }
                     else if (map[row, col] == 'D')
                     {
