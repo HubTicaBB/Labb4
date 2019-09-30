@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Labb4
 
@@ -14,7 +15,7 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', 'D','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
@@ -94,8 +95,17 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
-                    startPositionRow--;
+                    if (mapWithObjects[startPositionRow - 1, startPositionCol].IsBoxAvailable())
+                    {
+                        mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
+                        startPositionRow--;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nYou reached the wall of the dungeon. Try another command!");
+                        Thread.Sleep(2000);
+                        return;
+                    }    
                     break;
                 case 'a':
                     mapWithObjects[startPositionRow, startPositionCol].Symbol = '-';
