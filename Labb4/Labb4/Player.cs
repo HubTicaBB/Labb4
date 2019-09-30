@@ -5,7 +5,6 @@ namespace Labb4
 {
     internal class Player
     {
-        char symbol = '@';
         public string Name { get; set; }
         public int Score { get; set; }
         int startPositionRow = 3;
@@ -18,7 +17,7 @@ namespace Labb4
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -42,9 +41,17 @@ namespace Labb4
                     {
                         box = new Wall('#');
                     }
-                    else if (map[row, col] == '-')
+                    else if (map[row, col] == '-' || map[row, col] == 'M')
                     {
-                        box = new Room('-');
+                        if (map[row, col] == 'M')
+                        {
+                            Monster monster = new Monster();
+                            box = new Room('M', monster);
+                        }
+                        else
+                        {
+                            box = new Room('-');
+                        }
                     }
                     else if (map[row, col] == 'D')
                     {
