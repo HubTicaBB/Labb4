@@ -84,11 +84,11 @@ namespace Labb4
                                 box = new Room(Symbols.Key, key);
                                 break;
                             case 4:
-                                box = new Room(Symbols.Room);   // change this
+                                box = new Room(Symbols.Room);
                                 // potion room: lägga till klassen, lägga till konstruktor till room
                                 break;
                             case 5:
-                                box = new Room(Symbols.Room); // and this
+                                box = new Room(Symbols.Room);
                                 // trap room: samma som ovan
                                 break;
                             default:

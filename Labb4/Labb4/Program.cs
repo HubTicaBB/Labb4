@@ -7,7 +7,6 @@ namespace Labb4
     {
         static void Main(string[] args)
         {
-
             List<Player> players = new List<Player>();
             players.Add(new Player("Andreea"));
             players.Add(new Player("Tijana"));
