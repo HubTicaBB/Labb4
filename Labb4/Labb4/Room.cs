@@ -15,13 +15,12 @@
             this.Symbol = symbol;
             this.monster = new Monster();
         }
+
         public Room(char symbol, Key key) : base(symbol)
         {
             this.Symbol = symbol;
             this.key = new Key();
         }
-
-
 
         public override bool IsBoxAvailable()
         {

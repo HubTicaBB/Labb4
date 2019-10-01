@@ -6,10 +6,10 @@
         {
             this.Symbol = symbol;
         }
+
         public override bool IsBoxAvailable()
         {
             return false;
         }
-
     }
 }

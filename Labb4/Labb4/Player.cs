@@ -10,8 +10,8 @@ namespace Labb4
         public List<Key> items = new List<Key>();
         public string Name { get; set; }
         public int Score { get; set; }
-        int startPositionRow = 3;
-        int startPositionCol = 3;
+        int positionRow = 3;
+        int positionCol = 3;
 
         char[,] map = new char[,]
         {
@@ -26,6 +26,7 @@ namespace Labb4
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         };
+
         Box[,] mapWithObjects = new Box[10, 10];
 
         public Player(string name, int score = 100)
@@ -60,7 +61,6 @@ namespace Labb4
                         {
                             box = new Room('-');
                         }
-
                     }
                     else if (map[row, col] == 'D')
                     {
@@ -87,10 +87,11 @@ namespace Labb4
                 Console.WriteLine();
             }
         }
+
         public void Play()
         {
             Console.Clear();
-            StartMap(mapWithObjects, startPositionRow, startPositionCol);
+            StartMap(mapWithObjects, positionRow, positionCol);
             Console.WriteLine("Instructions");
             Console.Write("Control: ");
             ConsoleKeyInfo control = Console.ReadKey();
@@ -98,16 +99,16 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(startPositionRow - 1, startPositionCol);                   
+                    ChangePosition(positionRow - 1, positionCol);                   
                     break;
                 case 'a':
-                    ChangePosition(startPositionRow, startPositionCol - 1);
+                    ChangePosition(positionRow, positionCol - 1);
                     break;
                 case 's':
-                    ChangePosition(startPositionRow + 1, startPositionCol);
+                    ChangePosition(positionRow + 1, positionCol);
                     break;
                 case 'd':
-                    ChangePosition(startPositionRow, startPositionCol + 1);
+                    ChangePosition(positionRow, positionCol + 1);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -117,6 +118,7 @@ namespace Labb4
                     break;
             }
         }
+
         public void ChangePosition(int rowPosition, int colPosition)
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
@@ -130,7 +132,6 @@ namespace Labb4
                     Console.WriteLine($"\nYou reached a wall. Try another command!");
                     Thread.Sleep(1200);
                 }
-
                 else if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Door))
                 {
                     bool IsKeyAvailable = false;
@@ -151,11 +152,12 @@ namespace Labb4
                 }
             }
         }
+
         public void DoChange(int rowPosition, int colPosition)
         {
             mapWithObjects[rowPosition, colPosition].Symbol = '-';
-            startPositionRow = rowPosition;
-            startPositionCol = colPosition;
+            positionRow = rowPosition;
+            positionCol = colPosition;
         }
     }
 }
