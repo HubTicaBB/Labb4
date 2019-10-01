@@ -8,9 +8,9 @@ namespace Labb4
         static void Main(string[] args)
         {
             List<Player> players = new List<Player>();
-            players.Add(new Player("Andreea"));
-            players.Add(new Player("Tijana"));
-            players.Add(new Player("Pontus"));
+            players.Add(new Player("Andreea", 100));
+            players.Add(new Player("Tijana", 100));
+            players.Add(new Player("Pontus", 1));
 
             //bool play = true;
             NewGame(players);
@@ -52,7 +52,7 @@ namespace Labb4
             Console.Write("Enter your name: ");
             string name = Console.ReadLine();
             // TODO: Validera namnet
-            players.Add(new Player(name, '@'));
+            players.Add(new Player(name, 100));
             players[players.Count - 1].CreateObjects();
             while (play)
             {

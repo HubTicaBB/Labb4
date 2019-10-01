@@ -9,7 +9,7 @@ namespace Labb4
     {
         public List<Key> items = new List<Key>();
         public string Name { get; set; }
-        public int Score { get; set; }
+        public int MovesLeft { get; set; }
         int positionRow = 3;
         int positionCol = 3;
 
@@ -29,9 +29,10 @@ namespace Labb4
 
         Box[,] mapWithObjects = new Box[10, 10];
 
-        public Player(string name, int score = 100)
+        public Player(string name, int movesLeft)
         {
             this.Name = name;
+            this.MovesLeft = movesLeft;
         }
 
         public void CreateObjects()
@@ -70,8 +71,6 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 7);
-                        Console.WriteLine("room type is " + roomType);
-                        Console.ReadKey(true);
                         Items items;
                         switch (roomType)
                         {
@@ -193,9 +192,9 @@ namespace Labb4
         public void DoChange(int rowPosition, int colPosition, int oldRow, int oldCol)
         {
             mapWithObjects[oldRow, oldCol].Symbol = Symbols.Room;
-
             positionRow = rowPosition;
             positionCol = colPosition;
+            MovesLeft--;
         }
     }
 }
