@@ -1,11 +1,10 @@
 ﻿namespace Labb4
 {
-    class Key : Items
+    class Sword : Items
     {
         public override void PickUpItem()
         {
 
         }
-
     }
 }

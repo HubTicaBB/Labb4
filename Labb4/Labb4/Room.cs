@@ -3,7 +3,7 @@
     class Room : Box
     {
         Monster monster;
-        Key key;
+        Items items;
 
         public Room(Symbols symbol) : base(symbol)
         {
@@ -14,12 +14,12 @@
         {
             this.Symbol = symbol;
             this.monster = new Monster();
-        }       
+        }
 
-        public Room(Symbols symbol, Key key) : base(symbol)
+        public Room(Symbols symbol, Items items) : base(symbol)
         {
             this.Symbol = symbol;
-            this.key = new Key();
+            this.items = new Items();
         }
 
         public override bool IsBoxAvailable()

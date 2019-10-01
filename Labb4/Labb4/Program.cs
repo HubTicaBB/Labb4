@@ -19,6 +19,7 @@ namespace Labb4
                 string name = Console.ReadLine();
                 // TODO: Validera namnet
                 players.Add(new Player(name, '@'));
+                players[players.Count - 1].CreateObjects();
                 while (play)
                 {
                     players[players.Count - 1].CreateObjects();
