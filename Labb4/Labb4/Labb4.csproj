@@ -43,16 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bomb.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="IsAvailable.cs" />
+    <Compile Include="Items.cs" />
     <Compile Include="Key.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Potion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="Sword.cs" />
+    <Compile Include="Trap.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -58,7 +58,7 @@ namespace Labb4
                             box = new Room(Symbols.Key, key);
                         }
                         else
-                        { 
+                        {
                             box = new Room(Symbols.Room);
                         }
                     }
@@ -69,7 +69,8 @@ namespace Labb4
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
-                        int roomType = random.Next(1, 6);
+                        int roomType = random.Next(1, 7);
+                        Items items;
                         switch (roomType)
                         {
                             case 1:
@@ -84,12 +85,16 @@ namespace Labb4
                                 box = new Room(Symbols.Key, key);
                                 break;
                             case 4:
-                                box = new Room(Symbols.Room);   // change this
-                                // potion room: lägga till klassen, lägga till konstruktor till room
+                                items = new Potion();
+                                box = new Room(Symbols.Surprise, items);
                                 break;
                             case 5:
-                                box = new Room(Symbols.Room); // and this
-                                // trap room: samma som ovan
+                                items = new Trap();
+                                box = new Room(Symbols.Surprise, items);
+                                break;
+                            case 6:
+                                items = new Sword();
+                                box = new Room(Symbols.Surprise, items);
                                 break;
                             default:
                                 box = new Room(Symbols.Room);
@@ -129,7 +134,7 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(positionRow - 1, positionCol);                   
+                    ChangePosition(positionRow - 1, positionCol);
                     break;
                 case 'a':
                     ChangePosition(positionRow, positionCol - 1);
@@ -179,7 +184,7 @@ namespace Labb4
                         Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
                         Thread.Sleep(1200);
                     }
-                }                
+                }
             }
         }
 
