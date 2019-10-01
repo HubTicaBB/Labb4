@@ -7,7 +7,8 @@ namespace Labb4
 {
     internal class Player
     {
-        public List<Key> items = new List<Key>();
+        public List<Items> itemsList = new List<Items>();
+
         public string Name { get; set; }
         public int MovesLeft { get; set; }
         int positionRow = 3;
@@ -17,11 +18,11 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', 'D','x','-', '-', '-', '-', '#'},
-                {'#', '?', '-', 'x','-','-', '-', '?', '-', '#'},
+                {'#', '-', '-', 'D','-','-', '-', '-', '-', '#'},
+                {'#', '?', '-', '-','-','-', '-', '?', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '-','-','M', '-', 's', '-', '#'},
+                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
@@ -46,7 +47,7 @@ namespace Labb4
                     {
                         box = new Wall(Symbols.Wall);
                     }
-                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k')
+                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 's')
                     {
                         if (map[row, col] == 'M')
                         {
@@ -55,7 +56,12 @@ namespace Labb4
                         }
                         else if (map[row, col] == 'k')
                         {
-                            Key key = new Key();
+                            Key key = new Key(1);
+                            box = new Room(Symbols.Key, key);
+                        }
+                        else if (map[row, col] == 's')
+                        {
+                            Key key = new Key(3);
                             box = new Room(Symbols.Key, key);
                         }
                         else
@@ -82,7 +88,7 @@ namespace Labb4
                                 box = new Room(Symbols.Surprise, monster);
                                 break;
                             case 3:
-                                Key key = new Key();    // TODO: change constructor, argument: int antalGånger
+                                Key key = new Key(1);    // TODO: change constructor, argument: int antalGånger
                                 box = new Room(Symbols.Surprise, key);
                                 break;
                             case 4:
@@ -121,6 +127,17 @@ namespace Labb4
                     Console.Write((char)map[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
+            }
+            Legend();
+        }
+
+        public void Legend()
+        {
+            Console.WriteLine($"\nLegend:\nPlayer name: {Name} \nMoves left: {MovesLeft}");
+            Console.WriteLine("Items:");
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                Console.Write(itemsList[i] + " ");
             }
         }
 
@@ -171,7 +188,7 @@ namespace Labb4
                 else if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Door))
                 {
                     bool IsKeyAvailable = false;
-                    foreach (var item in items)
+                    foreach (var item in itemsList)
                     {
                         if (item.GetType() == typeof(Key))
                         {
