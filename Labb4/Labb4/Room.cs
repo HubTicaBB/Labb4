@@ -5,18 +5,18 @@
         Monster monster;
         Key key;
 
-        public Room(char symbol) : base(symbol)
+        public Room(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
         }
 
-        public Room(char symbol, Monster monster) : base(symbol)
+        public Room(Symbols symbol, Monster monster) : base(symbol)
         {
             this.Symbol = symbol;
             this.monster = new Monster();
         }
 
-        public Room(char symbol, Key key) : base(symbol)
+        public Room(Symbols symbol, Key key) : base(symbol)
         {
             this.Symbol = symbol;
             this.key = new Key();

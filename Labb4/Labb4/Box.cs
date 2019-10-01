@@ -1,10 +1,21 @@
 ﻿namespace Labb4
 {
+    enum Symbols 
+    { 
+        Room = '-', 
+        Wall = '#', 
+        Door = 'D', 
+        Exit = 'E',
+        Key = 'k',
+        Monster = 'M',
+        Player = '@'
+    }
+
     internal abstract class Box : IsAvailable
     {
-        public char Symbol { get; set; }        
+        public Symbols Symbol { get; set; }
 
-        public Box(char symbol)
+        public Box(Symbols symbol)
         {
             this.Symbol = symbol;
         }

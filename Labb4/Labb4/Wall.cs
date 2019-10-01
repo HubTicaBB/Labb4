@@ -1,8 +1,8 @@
 ﻿namespace Labb4
 {
     class Wall : Box
-    {
-        public Wall(char symbol) : base(symbol)
+    {        
+        public Wall(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
         }

@@ -2,7 +2,7 @@
 {
     class Door : Box
     {
-        public Door(char symbol) : base(symbol)
+        public Door(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
         }

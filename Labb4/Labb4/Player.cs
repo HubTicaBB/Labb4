@@ -43,32 +43,32 @@ namespace Labb4
                 {
                     if (map[row, col] == '#')
                     {
-                        box = new Wall('#');
+                        box = new Wall(Symbols.Wall);
                     }
                     else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k')
                     {
                         if (map[row, col] == 'M')
                         {
                             Monster monster = new Monster();
-                            box = new Room('M', monster);
+                            box = new Room(Symbols.Monster, monster);
                         }
                         else if (map[row, col] == 'k')
                         {
                             Key key = new Key();
-                            box = new Room('k', key);
+                            box = new Room(Symbols.Key, key);
                         }
                         else
                         {
-                            box = new Room('-');
+                            box = new Room(Symbols.Room);
                         }
                     }
                     else if (map[row, col] == 'D')
                     {
-                        box = new Door('D');
+                        box = new Door(Symbols.Door);
                     }
                     else
                     {
-                        box = new Exit('E');
+                        box = new Exit(Symbols.Exit);
                     }
                     mapWithObjects[row, col] = box;
                 }
@@ -81,8 +81,8 @@ namespace Labb4
             {
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
-                    map[startPositionRow, startPositionCol].Symbol = '@';
-                    Console.Write(map[row, col].Symbol + " ");
+                    map[startPositionRow, startPositionCol].Symbol = Symbols.Player;
+                    Console.Write((char)map[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
             }
@@ -155,7 +155,7 @@ namespace Labb4
 
         public void DoChange(int rowPosition, int colPosition)
         {
-            mapWithObjects[rowPosition, colPosition].Symbol = '-';
+            mapWithObjects[rowPosition, colPosition].Symbol = Symbols.Room;
             positionRow = rowPosition;
             positionCol = colPosition;
         }

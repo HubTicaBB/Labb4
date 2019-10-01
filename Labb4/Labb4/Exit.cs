@@ -2,7 +2,7 @@
 {
     class Exit : Box
     {
-        public Exit(char symbol) : base(symbol)
+        public Exit(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
         }
