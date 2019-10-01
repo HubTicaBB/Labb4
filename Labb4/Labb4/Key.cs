@@ -7,10 +7,7 @@
         {
             this.NumberUsageKey = numberUsageKey;
         }
-        public override void PickUpItem()
-        {
 
-        }
         public override string ToString()
         {
             return $"Key: {NumberUsageKey}";

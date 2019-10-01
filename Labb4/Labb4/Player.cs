@@ -76,7 +76,8 @@ namespace Labb4
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
-                        int roomType = random.Next(1, 7);
+                        int roomType = random.Next(1, 8);
+                        Thread.Sleep(2000);
                         Items items;
                         switch (roomType)
                         {
@@ -88,8 +89,8 @@ namespace Labb4
                                 box = new Room(Symbols.Surprise, monster);
                                 break;
                             case 3:
-                                Key key = new Key(1);    // TODO: change constructor, argument: int antalGånger
-                                box = new Room(Symbols.Surprise, key);
+                                items = new Key(1);
+                                box = new Room(Symbols.Surprise, items);
                                 break;
                             case 4:
                                 items = new Potion();
@@ -101,6 +102,10 @@ namespace Labb4
                                 break;
                             case 6:
                                 items = new Sword();
+                                box = new Room(Symbols.Surprise, items);
+                                break;
+                            case 7:
+                                items = new Bomb();
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             default:
@@ -208,10 +213,20 @@ namespace Labb4
 
         public void DoChange(int rowPosition, int colPosition, int oldRow, int oldCol)
         {
-            mapWithObjects[oldRow, oldCol].Symbol = Symbols.Room;
+            mapWithObjects[oldRow, oldCol].Symbol = Symbols.Room;            
             positionRow = rowPosition;
             positionCol = colPosition;
+            if (mapWithObjects[positionRow, positionCol].Item != null)
+            {
+                PickUpItem(mapWithObjects[positionRow, positionCol].Item, mapWithObjects[positionRow, positionCol]);
+            }
             MovesLeft--;
+        }
+
+        internal virtual void PickUpItem(Items item, Box box)
+        {
+            itemsList.Add(item);
+            box.Item = null;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Labb4
+﻿using System.Collections.Generic;
+
+namespace Labb4
 {
     public class Items
     {
@@ -6,9 +8,5 @@
         {
 
         }
-        public virtual void PickUpItem()
-        { }
-
-
     }
 }

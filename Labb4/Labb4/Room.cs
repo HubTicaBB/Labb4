@@ -1,25 +1,27 @@
 ﻿namespace Labb4
 {
-    class Room : Box
+    internal class Room : Box
     {
-        Monster monster;
-        Items items;
+        public Monster Monster { get; set; }
+        public Items Item { get; set; }
 
         public Room(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
         }
 
-        public Room(Symbols symbol, Monster monster) : base(symbol)
+        public Room(Symbols symbol, Monster monster) : base(symbol, monster)
         {
             this.Symbol = symbol;
-            this.monster = new Monster();
+            //this.Monster = new Monster();
+            this.Monster = monster;
         }
 
-        public Room(Symbols symbol, Items items) : base(symbol)
+        public Room(Symbols symbol, Items items) : base(symbol, items)
         {
             this.Symbol = symbol;
-            this.items = new Items();
+            //this.Item = new Items();
+            this.Item = items;
         }
 
         public override bool IsBoxAvailable()

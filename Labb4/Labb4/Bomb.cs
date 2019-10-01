@@ -2,9 +2,9 @@
 {
     class Bomb : Items
     {
-        public override void PickUpItem()
+        public override string ToString()
         {
-
+            return $"Bomb: ";
         }
     }
 }

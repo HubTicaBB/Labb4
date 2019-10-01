@@ -2,9 +2,9 @@
 {
     class Trap : Items
     {
-        public override void PickUpItem()
+        public override string ToString()
         {
-
+            return $"Trap: ";
         }
     }
 }

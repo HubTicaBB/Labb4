@@ -2,9 +2,9 @@
 {
     class Sword : Items
     {
-        public override void PickUpItem()
+        public override string ToString()
         {
-
+            return $"Sword: ";
         }
     }
 }
