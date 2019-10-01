@@ -14,7 +14,7 @@
         {
             this.Symbol = symbol;
             this.monster = new Monster();
-        }
+        }       
 
         public Room(Symbols symbol, Key key) : base(symbol)
         {

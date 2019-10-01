@@ -17,12 +17,12 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', 'D','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', 'D','x','-', '-', '-', '-', '#'},
+                {'#', '-', '-', 'x','-','-', '-', '-', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '?','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         };
@@ -58,13 +58,43 @@ namespace Labb4
                             box = new Room(Symbols.Key, key);
                         }
                         else
-                        {
+                        { 
                             box = new Room(Symbols.Room);
                         }
                     }
                     else if (map[row, col] == 'D')
                     {
                         box = new Door(Symbols.Door);
+                    }
+                    else if (map[row, col] == '?')
+                    {
+                        Random random = new Random();
+                        int roomType = random.Next(1, 6);
+                        switch (roomType)
+                        {
+                            case 1:
+                                box = new Room(Symbols.Room);
+                                break;
+                            case 2:
+                                Monster monster = new Monster();
+                                box = new Room(Symbols.Monster, monster);
+                                break;
+                            case 3:
+                                Key key = new Key();    // TODO: change constructor, argument: int antalGånger
+                                box = new Room(Symbols.Key, key);
+                                break;
+                            case 4:
+                                box = new Room(Symbols.Room);   // change this
+                                // potion room: lägga till klassen, lägga till konstruktor till room
+                                break;
+                            case 5:
+                                box = new Room(Symbols.Room); // and this
+                                // trap room: samma som ovan
+                                break;
+                            default:
+                                box = new Room(Symbols.Room);
+                                break;
+                        }
                     }
                     else
                     {
@@ -149,7 +179,7 @@ namespace Labb4
                         Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
                         Thread.Sleep(1200);
                     }
-                }
+                }                
             }
         }
 

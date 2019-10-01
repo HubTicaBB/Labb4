@@ -8,6 +8,7 @@
         Exit = 'E',
         Key = 'k',
         Monster = 'M',
+        Surprise = '?',
         Player = '@'
     }
 
