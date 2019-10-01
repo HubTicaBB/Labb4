@@ -18,10 +18,10 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', 'D','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', 'D','D','D', 'D', '-', '-', '#'},
                 {'#', '?', '-', '-','-','-', '-', '?', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','M', '-', 's', '-', '#'},
+                {'#', '-', '-', '-','-','M', '-', 'K', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -47,7 +47,7 @@ namespace Labb4
                     {
                         box = new Wall(Symbols.Wall);
                     }
-                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 's')
+                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
                     {
                         if (map[row, col] == 'M')
                         {
@@ -59,10 +59,10 @@ namespace Labb4
                             Key key = new Key(1);
                             box = new Room(Symbols.Key, key);
                         }
-                        else if (map[row, col] == 's')
+                        else if (map[row, col] == 'K')
                         {
-                            Key key = new Key(3);
-                            box = new Room(Symbols.Key, key);
+                            SuperKey superKey = new SuperKey(3);
+                            box = new Room(Symbols.SuperKey, superKey);
                         }
                         else
                         {
@@ -93,19 +93,19 @@ namespace Labb4
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 4:
-                                items = new Potion();
+                                items = new Potion(1);
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 5:
-                                items = new Trap();
+                                items = new Trap(1); // Change it so that it doesn't act as an item
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 6:
-                                items = new Sword();
+                                items = new Sword(1);
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 7:
-                                items = new Bomb();
+                                items = new Bomb(1);
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             default:
@@ -139,11 +139,40 @@ namespace Labb4
         public void Legend()
         {
             Console.WriteLine($"\nLegend:\nPlayer name: {Name} \nMoves left: {MovesLeft}");
-            Console.WriteLine("Items:");
+            Console.WriteLine("Items:");            
+            int keyCounter = 0;
+            int superKeyCounter = 0;
+            int bombCounter = 0;
+            int swordCounter = 0;
+            int trapCounter = 0;
             for (int i = 0; i < itemsList.Count; i++)
             {
-                Console.Write(itemsList[i] + " ");
+                if (itemsList[i].GetType() == typeof(Key))
+                {                    
+                    keyCounter++;
+                } 
+                else if (itemsList[i].GetType() == typeof(SuperKey))
+                {
+                    superKeyCounter++;
+                }
+                else if (itemsList[i].GetType() == typeof(Bomb))
+                {
+                    bombCounter++;
+                }
+                else if (itemsList[i].GetType() == typeof(Sword))
+                {
+                    swordCounter++;
+                }
+                else if (itemsList[i].GetType() == typeof(Trap))
+                {
+                    trapCounter++;
+                }
             }
+            Console.WriteLine($"Key - {keyCounter}");
+            Console.WriteLine($"Super Key - {superKeyCounter}");
+            Console.WriteLine($"Bomb - {bombCounter}");
+            Console.WriteLine($"Sword - {swordCounter}");
+            Console.WriteLine($"Trap - {trapCounter}");
         }
 
         public void Play()
@@ -195,9 +224,14 @@ namespace Labb4
                     bool IsKeyAvailable = false;
                     foreach (var item in itemsList)
                     {
-                        if (item.GetType() == typeof(Key))
+                        if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
                         {
                             DoChange(rowPosition, colPosition, oldRow, oldCol);
+                            item.NumberUsageKey--;
+                            if (item.NumberUsageKey == 0)
+                            {
+                                itemsList.Remove(item);
+                            }
                             IsKeyAvailable = true;
                             break;
                         }

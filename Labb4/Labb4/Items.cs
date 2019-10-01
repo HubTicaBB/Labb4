@@ -4,9 +4,10 @@ namespace Labb4
 {
     public class Items
     {
-        public Items()
+        public virtual int NumberUsageKey { get; set; }
+        public Items(int numberUsage)
         {
-
+            NumberUsageKey = numberUsage;
         }
     }
 }

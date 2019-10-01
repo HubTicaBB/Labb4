@@ -56,7 +56,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="SuperKey.cs" />
     <Compile Include="Sword.cs" />
+    <Compile Include="Symbols.cs" />
     <Compile Include="Trap.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>
