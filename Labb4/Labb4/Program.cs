@@ -12,29 +12,62 @@ namespace Labb4
             players.Add(new Player("Tijana"));
             players.Add(new Player("Pontus"));
 
+            //bool play = true;
+            NewGame(players);
+            //Console.WriteLine("Does anyone else want to play? (yes/no)");
+            //string answer = Console.ReadLine();
+            //// TODO: Check if answer is yes eller no
+            //if (answer == "yes")
+            //{
+            //    NewGame(players);
+            //}
+
+
+            //Console.Write("Enter your name: ");
+            //string name = Console.ReadLine();
+            //// TODO: Validera namnet
+            //players.Add(new Player(name, '@'));
+            //players[players.Count - 1].CreateObjects();
+            //while (play)
+            //{
+
+            //    players[players.Count - 1].Play();
+            //    // om antal drag == 0 --> play = false;
+            //    // om objektet är Exit --> play = false
+            //}
+
+            //Console.WriteLine("Does anyone else want to play? (yes/no)");
+            //string answer = Console.ReadLine();
+            //// TODO: Check if answer is yes eller no
+            //if (answer == "yes")
+            //{
+            //    NewGame();
+            //}
+
+        }
+
+        public static void NewGame(List<Player> players)
+        {
             bool play = true;
+            Console.Write("Enter your name: ");
+            string name = Console.ReadLine();
+            // TODO: Validera namnet
+            players.Add(new Player(name, '@'));
+            players[players.Count - 1].CreateObjects();
             while (play)
             {
-                Console.Write("Enter your name: ");
-                string name = Console.ReadLine();
-                // TODO: Validera namnet
-                players.Add(new Player(name, '@'));
-                players[players.Count - 1].CreateObjects();
-                while (play)
-                {
-                    players[players.Count - 1].CreateObjects();
-                    players[players.Count - 1].Play();
-                    // om antal drag == 0 --> play = false;
-                    // om objektet är Exit --> play = false
-                }
 
-                Console.WriteLine("Does anyone else want to play? (yes/no)");
-                string answer = Console.ReadLine();
-                // TODO: Check if answer is yes eller no
-                if (answer == "no")
-                {
-                    play = false;
-                }
+                players[players.Count - 1].Play();
+                // om antal drag == 0 --> play = false;
+                // om objektet är Exit --> play = false
+            }
+
+            Console.WriteLine("Does anyone else want to play? (yes/no)");
+            string answer = Console.ReadLine();
+            // TODO: Check if answer is yes eller no
+            if (answer == "yes")
+            {
+                NewGame(players);
             }
         }
     }

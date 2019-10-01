@@ -18,11 +18,11 @@ namespace Labb4
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', 'D','x','-', '-', '-', '-', '#'},
-                {'#', '-', '-', 'x','-','-', '-', '-', '-', '#'},
+                {'#', '?', '-', 'x','-','-', '-', '?', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','M', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '?','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
         };
@@ -70,19 +70,21 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 7);
+                        Console.WriteLine("room type is " + roomType);
+                        Console.ReadKey(true);
                         Items items;
                         switch (roomType)
                         {
                             case 1:
-                                box = new Room(Symbols.Room);
+                                box = new Room(Symbols.Surprise);
                                 break;
                             case 2:
                                 Monster monster = new Monster();
-                                box = new Room(Symbols.Monster, monster);
+                                box = new Room(Symbols.Surprise, monster);
                                 break;
                             case 3:
                                 Key key = new Key();    // TODO: change constructor, argument: int antalGånger
-                                box = new Room(Symbols.Key, key);
+                                box = new Room(Symbols.Surprise, key);
                                 break;
                             case 4:
                                 items = new Potion();
@@ -110,7 +112,7 @@ namespace Labb4
             }
         }
 
-        public static void StartMap(Box[,] map, int startPositionRow, int startPositionCol)
+        public void StartMap(Box[,] map, int startPositionRow, int startPositionCol)
         {
             for (int row = 0; row < map.GetLength(0); row++)
             {
@@ -134,16 +136,16 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(positionRow - 1, positionCol);
+                    ChangePosition(positionRow - 1, positionCol, positionRow, positionCol);
                     break;
                 case 'a':
-                    ChangePosition(positionRow, positionCol - 1);
+                    ChangePosition(positionRow, positionCol - 1, positionRow, positionCol);
                     break;
                 case 's':
-                    ChangePosition(positionRow + 1, positionCol);
+                    ChangePosition(positionRow + 1, positionCol, positionRow, positionCol);
                     break;
                 case 'd':
-                    ChangePosition(positionRow, positionCol + 1);
+                    ChangePosition(positionRow, positionCol + 1, positionRow, positionCol);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -154,11 +156,11 @@ namespace Labb4
             }
         }
 
-        public void ChangePosition(int rowPosition, int colPosition)
+        public void ChangePosition(int rowPosition, int colPosition, int oldRow, int oldCol)
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                DoChange(rowPosition, colPosition);
+                DoChange(rowPosition, colPosition, oldRow, oldCol);
             }
             else
             {
@@ -174,7 +176,7 @@ namespace Labb4
                     {
                         if (item.GetType() == typeof(Key))
                         {
-                            DoChange(rowPosition, colPosition);
+                            DoChange(rowPosition, colPosition, oldRow, oldCol);
                             IsKeyAvailable = true;
                             break;
                         }
@@ -188,9 +190,10 @@ namespace Labb4
             }
         }
 
-        public void DoChange(int rowPosition, int colPosition)
+        public void DoChange(int rowPosition, int colPosition, int oldRow, int oldCol)
         {
-            mapWithObjects[rowPosition, colPosition].Symbol = Symbols.Room;
+            mapWithObjects[oldRow, oldCol].Symbol = Symbols.Room;
+
             positionRow = rowPosition;
             positionCol = colPosition;
         }
