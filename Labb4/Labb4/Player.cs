@@ -22,9 +22,9 @@ namespace Labb4
                 {'#', '-', '-', 'D','D','D', 'D', '-', '-', '#'},
                 {'#', '?', '-', '-','-','-', '-', '?', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','M', '-', 'K', '-', '#'},
-                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
+                {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
+                {'#', '-', 'k', '-','-','-', 'b', '-', '-', '#'},
+                {'#', 's', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
@@ -39,6 +39,11 @@ namespace Labb4
             PositionCol = positionCol;
         }
 
+        public Player()
+        {
+
+        }
+
         public void CreateObjects()
         {
             Box box;
@@ -50,30 +55,37 @@ namespace Labb4
                     {
                         box = new Wall(Symbols.Wall);
                     }
-                    else if (map[row, col] == 'M')
+                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K' || map[row, col] == 'b')
                     {
-                        Monster monster = new Monster();
-                        box = new Room(Symbols.Monster, monster);
-                    }
-                    else if (map[row, col] == 'k')
-                    {
-                        Key key = new Key(1);
-                        box = new Room(Symbols.Key, key);
-                    }
-                    else if (map[row, col] == 'K')
-                    {
-                        SuperKey superKey = new SuperKey(3);
-                        box = new Room(Symbols.SuperKey, superKey);
-                    }
-                    else if (map[row, col] == '-')
-                    {
-                        box = new Room(Symbols.Room);
-                    }
-
+                        if (map[row, col] == 'M')
+                        {
+                            Monster monster = new Monster(10);
+                            box = new Room(Symbols.Monster, monster);
+                        }
+                        else if (map[row, col] == 'k')
+                        {
+                            Key key = new Key(1);
+                            box = new Room(Symbols.Key, key);
+                        }
+                        else if (map[row, col] == 'K')
+                        {
+                            SuperKey superKey = new SuperKey(3);
+                            box = new Room(Symbols.SuperKey, superKey);
+                        }
+                        else if (map[row, col] == 'b')
+                        {
+                            Bomb bomb = new Bomb(1);
+                            box = new Room(Symbols.Bomb, bomb);
+                        }
+                        else
+                        {
+                            box = new Room(Symbols.Room);
+                        }
+                    } 
                     else if (map[row, col] == 'D')
                     {
                         box = new Door(Symbols.Door);
-                    }
+                    }                   
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
@@ -86,15 +98,15 @@ namespace Labb4
                                 box = new Room(Symbols.Surprise);
                                 break;
                             case 2:
-                                Monster monster = new Monster();
-                                box = new Room(Symbols.Surprise, monster);
+                                Monster monster = new Monster(10);
+                                box = new Room(Symbols.Surprise, monster);                                
                                 break;
                             case 3:
                                 items = new Key(1);
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 4:
-                                items = new Potion(1);
+                                items = new Potion(1); // Change it so that it doesn't act as an item
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             case 5:
@@ -185,7 +197,26 @@ namespace Labb4
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                ChangePosition(rowPosition, colPosition);
+                if (mapWithObjects[rowPosition, colPosition].Symbol == Symbols.Monster)
+                {
+                    if (mapWithObjects[rowPosition, colPosition].Monster.IsBoxAvailable());
+                    {
+                        List<Items> weaponsList = ReturnWeapons();
+                        if (weaponsList.Count > 0)
+                        {
+                            FightMonster(mapWithObjects[rowPosition, colPosition]);
+                            weaponsList.Clear();
+                        }                        
+                        if (mapWithObjects[rowPosition, colPosition].Monster.MonsterPower <= 0)
+                        {
+                            ChangePosition(rowPosition, colPosition);
+                        }                        
+                    }
+                }
+                else
+                {
+                    ChangePosition(rowPosition, colPosition);
+                }                
             }
         }
 
@@ -201,14 +232,64 @@ namespace Labb4
                 item = currentBox.Item;
                 PickUpItem(item, currentBox);
             }
+            
+
 
             MovesLeft--;
+        }
+
+        internal List<Items> ReturnWeapons()
+        {
+            List<Items> weaponsList = new List<Items>();
+            foreach (var item in itemsList)
+            {
+                if (item.GetType() == typeof(Bomb) || item.GetType() == typeof(Sword))
+                {
+                    weaponsList.Add(item);
+                }
+            }
+            return weaponsList;
         }
 
         internal virtual void PickUpItem(Items item, Box box)
         {
             itemsList.Add(item);
             box.Item = null;
+        }
+
+        public void FightMonster(Box currentBox)
+        {
+            Console.WriteLine("You reached a room with a terryfing monster!! Use your weapons to fight the beast!");
+            Console.Write("Select a weapon: ");
+            bool validInput = false;
+            while (!validInput)
+            {
+                string input = Console.ReadLine().ToLower().Trim();
+                Items itemToUse;
+                if (IsWeaponAvailable(input, out itemToUse))
+                {
+                    currentBox.Monster.ReduceMonstersPower(itemToUse);
+                    validInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("This is not a weapon, try again: ");
+                }
+            }
+        }
+
+        public bool IsWeaponAvailable(string input, out Items weapon)
+        {
+            foreach (var item in itemsList)
+            {
+                if (item.GetType().Name.ToString().ToLower() == input && (item.GetType() == typeof(Bomb) || item.GetType() == typeof(Sword)))
+                {
+                    weapon = item;
+                    return true;
+                }
+            }
+            weapon = new Items(0);
+            return false;
         }
     }
 }

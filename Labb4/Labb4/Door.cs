@@ -12,16 +12,14 @@ namespace Labb4
 
         public override bool IsBoxAvailable()
         {
-            Game game = new Game();
-            Player player = game.players[game.players.Count - 1];
-            foreach (var item in player.itemsList)
+            foreach (var item in itemsList)
             {
                 if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
                 {
                     item.NumberUsageKey--;
                     if (item.NumberUsageKey == 0)
                     {
-                        player.itemsList.Remove(item);
+                        itemsList.Remove(item);
                     }
                     return true;
                 }
