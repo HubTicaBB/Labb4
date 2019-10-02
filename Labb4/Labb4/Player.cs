@@ -12,10 +12,10 @@ namespace Labb4
 
         public string Name { get; set; }
         public int MovesLeft { get; set; }
-        int positionRow = 3;
-        int positionCol = 3;
+        public int PositionRow { get; set; }
+        public int PositionCol { get; set; }
 
-        char[,] map = new char[,]
+        private char[,] map = new char[,]
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -26,15 +26,17 @@ namespace Labb4
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
 
-        Box[,] mapWithObjects = new Box[10, 10];
+        public Box[,] mapWithObjects = new Box[10, 10];
 
-        public Player(string name, int movesLeft)
+        public Player(string name, int movesLeft, int positionRow, int positionCol)
         {
-            this.Name = name;
-            this.MovesLeft = movesLeft;
+            Name = name;
+            MovesLeft = movesLeft;
+            PositionRow = positionRow;
+            PositionCol = positionCol;
         }
 
         public void CreateObjects()
@@ -123,14 +125,14 @@ namespace Labb4
             }
         }
 
-        public void StartMap(Box[,] map, int startPositionRow, int startPositionCol)
+        public void PrintMap()
         {
             for (int row = 0; row < map.GetLength(0); row++)
             {
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
-                    map[startPositionRow, startPositionCol].Symbol = Symbols.Player;
-                    Console.Write((char)map[row, col].Symbol + " ");
+                    mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Player;
+                    Console.Write((char)mapWithObjects[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
             }
@@ -139,7 +141,7 @@ namespace Labb4
 
         public void Legend()
         {
-            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:", -12} {MovesLeft}");
+            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:", -12} {MovesLeft}\n\nItems:");
            
             var doubles = from item in itemsList
                           group item by item.GetType() into nGroup
@@ -154,23 +156,23 @@ namespace Labb4
         public void Play()
         {
             Console.Clear();
-            StartMap(mapWithObjects, positionRow, positionCol);
+            PrintMap();
             Console.Write("\nCommand: ");
             ConsoleKeyInfo control = Console.ReadKey();
 
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(positionRow - 1, positionCol, positionRow, positionCol);
+                    ChangePosition(PositionRow - 1, PositionCol);
                     break;
                 case 'a':
-                    ChangePosition(positionRow, positionCol - 1, positionRow, positionCol);
+                    ChangePosition(PositionRow, PositionCol - 1);
                     break;
                 case 's':
-                    ChangePosition(positionRow + 1, positionCol, positionRow, positionCol);
+                    ChangePosition(PositionRow + 1, PositionCol);
                     break;
                 case 'd':
-                    ChangePosition(positionRow, positionCol + 1, positionRow, positionCol);
+                    ChangePosition(PositionRow, PositionCol + 1);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -181,11 +183,11 @@ namespace Labb4
             }
         }
 
-        public void ChangePosition(int rowPosition, int colPosition, int oldRow, int oldCol)
+        public void ChangePosition(int rowPosition, int colPosition)
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                DoChange(rowPosition, colPosition, oldRow, oldCol);
+                DoChange(rowPosition, colPosition);
             }
             else
             {
@@ -201,7 +203,7 @@ namespace Labb4
                     {
                         if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
                         {
-                            DoChange(rowPosition, colPosition, oldRow, oldCol);
+                            DoChange(rowPosition, colPosition);
                             item.NumberUsageKey--;
                             if (item.NumberUsageKey == 0)
                             {
@@ -220,14 +222,17 @@ namespace Labb4
             }
         }
 
-        public void DoChange(int rowPosition, int colPosition, int oldRow, int oldCol)
+        public void DoChange(int newRowPosition, int newColPosition)
         {
-            mapWithObjects[oldRow, oldCol].Symbol = Symbols.Room;            
-            positionRow = rowPosition;
-            positionCol = colPosition;
-            if (mapWithObjects[positionRow, positionCol].Item != null)
+            mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;            
+            PositionRow = newRowPosition;
+            PositionCol = newColPosition;
+            Box currentBox = mapWithObjects[PositionRow, PositionCol];
+            Items item;
+            if (currentBox.Item != null)
             {
-                PickUpItem(mapWithObjects[positionRow, positionCol].Item, mapWithObjects[positionRow, positionCol]);
+                item = currentBox.Item;
+                PickUpItem(item, currentBox);
             }
             MovesLeft--;
         }
