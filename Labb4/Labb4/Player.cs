@@ -163,16 +163,16 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    ChangePosition(PositionRow - 1, PositionCol);
+                    CheckIfPositionisAvailable(PositionRow - 1, PositionCol);
                     break;
                 case 'a':
-                    ChangePosition(PositionRow, PositionCol - 1);
+                    CheckIfPositionisAvailable(PositionRow, PositionCol - 1);
                     break;
                 case 's':
-                    ChangePosition(PositionRow + 1, PositionCol);
+                    CheckIfPositionisAvailable(PositionRow + 1, PositionCol);
                     break;
                 case 'd':
-                    ChangePosition(PositionRow, PositionCol + 1);
+                    CheckIfPositionisAvailable(PositionRow, PositionCol + 1);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -183,46 +183,15 @@ namespace Labb4
             }
         }
 
-        public void ChangePosition(int rowPosition, int colPosition)
+        public void CheckIfPositionisAvailable(int rowPosition, int colPosition)
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                DoChange(rowPosition, colPosition);
-            }
-            else
-            {
-                if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Wall))
-                {
-                    Console.WriteLine($"\nYou reached a wall. Try another command!");
-                    Thread.Sleep(1200);
-                }
-                else if (mapWithObjects[rowPosition, colPosition].GetType() == typeof(Door))
-                {
-                    bool IsKeyAvailable = false;
-                    foreach (var item in itemsList)
-                    {
-                        if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
-                        {
-                            DoChange(rowPosition, colPosition);
-                            item.NumberUsageKey--;
-                            if (item.NumberUsageKey == 0)
-                            {
-                                itemsList.Remove(item);
-                            }
-                            IsKeyAvailable = true;
-                            break;
-                        }
-                    }
-                    if (!IsKeyAvailable)
-                    {
-                        Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
-                        Thread.Sleep(1200);
-                    }
-                }
-            }
+                ChangePosition(rowPosition, colPosition);                
+            }            
         }
 
-        public void DoChange(int newRowPosition, int newColPosition)
+        public void ChangePosition(int newRowPosition, int newColPosition)
         {
             mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;            
             PositionRow = newRowPosition;

@@ -4,15 +4,14 @@ using System.Collections.Generic;
 namespace Labb4
 {
     class Program
-    {
+    {        
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>();
-            players.Add(new Player("Andreea", 100, 3, 3));
-            players.Add(new Player("Tijana", 100, 3, 3));
-            players.Add(new Player("Pontus", 100, 3, 3));
-            NewGame(players);
-
+            Game game = new Game();
+            game.players.Add(new Player("Andreea", 100, 3, 3));
+            game.players.Add(new Player("Tijana", 100, 3, 3));
+            game.players.Add(new Player("Pontus", 100, 3, 3));
+            NewGame(game.players);
         }
 
         public static void NewGame(List<Player> players)

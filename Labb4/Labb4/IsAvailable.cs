@@ -1,6 +1,6 @@
 ﻿namespace Labb4
 {
-    interface IsAvailable
+    interface IAvailable
     {
         bool IsBoxAvailable();
     }
