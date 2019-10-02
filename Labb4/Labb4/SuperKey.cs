@@ -16,7 +16,7 @@ namespace Labb4
 
         public override string ToString()
         {
-            return $"Super Key: {NumberUsageKey}";
+            return $"Super key: ";
         }
     }
 }

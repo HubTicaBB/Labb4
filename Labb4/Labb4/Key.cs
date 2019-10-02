@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return $"Key: {NumberUsageKey}";
+            return $"Key: ";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 namespace Labb4
 
@@ -138,49 +139,23 @@ namespace Labb4
 
         public void Legend()
         {
-            Console.WriteLine($"\nLegend:\nPlayer name: {Name} \nMoves left: {MovesLeft}");
-            Console.WriteLine("Items:");            
-            int keyCounter = 0;
-            int superKeyCounter = 0;
-            int bombCounter = 0;
-            int swordCounter = 0;
-            int trapCounter = 0;
-            for (int i = 0; i < itemsList.Count; i++)
+            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:", -12} {MovesLeft}");
+           
+            var doubles = from item in itemsList
+                          group item by item.GetType() into nGroup
+                          select new { Name = nGroup.First(), Count = nGroup.Count() };
+
+            foreach (var item in doubles)
             {
-                if (itemsList[i].GetType() == typeof(Key))
-                {                    
-                    keyCounter++;
-                } 
-                else if (itemsList[i].GetType() == typeof(SuperKey))
-                {
-                    superKeyCounter++;
-                }
-                else if (itemsList[i].GetType() == typeof(Bomb))
-                {
-                    bombCounter++;
-                }
-                else if (itemsList[i].GetType() == typeof(Sword))
-                {
-                    swordCounter++;
-                }
-                else if (itemsList[i].GetType() == typeof(Trap))
-                {
-                    trapCounter++;
-                }
+                Console.WriteLine($"{item.Name,-12} {item.Count}");
             }
-            Console.WriteLine($"Key - {keyCounter}");
-            Console.WriteLine($"Super Key - {superKeyCounter}");
-            Console.WriteLine($"Bomb - {bombCounter}");
-            Console.WriteLine($"Sword - {swordCounter}");
-            Console.WriteLine($"Trap - {trapCounter}");
         }
 
         public void Play()
         {
             Console.Clear();
             StartMap(mapWithObjects, positionRow, positionCol);
-            Console.WriteLine("Instructions");
-            Console.Write("Control: ");
+            Console.Write("\nCommand: ");
             ConsoleKeyInfo control = Console.ReadKey();
 
             switch (Char.ToLower(control.KeyChar))
