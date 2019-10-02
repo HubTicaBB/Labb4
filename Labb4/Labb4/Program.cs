@@ -26,7 +26,10 @@ namespace Labb4
             while (play)
             {
                 players[players.Count - 1].Play();
-                // om antal drag == 0 --> play = false;
+                if (players[players.Count - 1].MovesLeft == 0)
+                {
+                    play = false;
+                }                
                 // om objektet är Exit --> play = false
             }
 
