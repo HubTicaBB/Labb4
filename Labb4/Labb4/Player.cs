@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Linq;
+using System.Threading;
 
 namespace Labb4
 
@@ -50,28 +50,26 @@ namespace Labb4
                     {
                         box = new Wall(Symbols.Wall);
                     }
-                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
+                    else if (map[row, col] == 'M')
                     {
-                        if (map[row, col] == 'M')
-                        {
-                            Monster monster = new Monster();
-                            box = new Room(Symbols.Monster, monster);
-                        }
-                        else if (map[row, col] == 'k')
-                        {
-                            Key key = new Key(1);
-                            box = new Room(Symbols.Key, key);
-                        }
-                        else if (map[row, col] == 'K')
-                        {
-                            SuperKey superKey = new SuperKey(3);
-                            box = new Room(Symbols.SuperKey, superKey);
-                        }
-                        else
-                        {
-                            box = new Room(Symbols.Room);
-                        }
+                        Monster monster = new Monster();
+                        box = new Room(Symbols.Monster, monster);
                     }
+                    else if (map[row, col] == 'k')
+                    {
+                        Key key = new Key(1);
+                        box = new Room(Symbols.Key, key);
+                    }
+                    else if (map[row, col] == 'K')
+                    {
+                        SuperKey superKey = new SuperKey(3);
+                        box = new Room(Symbols.SuperKey, superKey);
+                    }
+                    else if (map[row, col] == '-')
+                    {
+                        box = new Room(Symbols.Room);
+                    }
+
                     else if (map[row, col] == 'D')
                     {
                         box = new Door(Symbols.Door);
@@ -141,8 +139,8 @@ namespace Labb4
 
         public void Legend()
         {
-            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:", -12} {MovesLeft}\n\nItems:");
-           
+            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:",-12} {MovesLeft}\n\nItems:");
+
             var doubles = from item in itemsList
                           group item by item.GetType() into nGroup
                           select new { Name = nGroup.First(), Count = nGroup.Count() };
@@ -187,13 +185,13 @@ namespace Labb4
         {
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
             {
-                ChangePosition(rowPosition, colPosition);                
-            }            
+                ChangePosition(rowPosition, colPosition);
+            }
         }
 
         public void ChangePosition(int newRowPosition, int newColPosition)
         {
-            mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;            
+            mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
             PositionRow = newRowPosition;
             PositionCol = newColPosition;
             Box currentBox = mapWithObjects[PositionRow, PositionCol];
@@ -203,6 +201,7 @@ namespace Labb4
                 item = currentBox.Item;
                 PickUpItem(item, currentBox);
             }
+
             MovesLeft--;
         }
 
