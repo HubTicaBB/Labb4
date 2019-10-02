@@ -3,54 +3,41 @@ using System.Threading;
 
 namespace Labb4
 {
-    class Monster : Player, IAvailable
+    class Monster : IAvailable
     {
         public int MonsterPower { get; set; }
-        public Monster(int monsterPower)
+        static Game game = new Game();
+        static Player player = game.players[game.players.Count - 1];
+        public Monster()
         {
-            MonsterPower = monsterPower;
+            MonsterPower = 10;
         }
-       
-
-        public void ReduceMonstersPower(Items weapon)
+        public void FightMonster(Items weapon)
         {
-            if (weapon.GetType() == typeof(Bomb))
+            Console.WriteLine("You reached a room with a terryfing monster!! Use your weapons to fight the beast!");
+            string input = Console.ReadLine();
+
+            if (weapon.GetType().Name.ToString() == input)
             {
-                MonsterPower -= 5;                
+                MonsterPower -= 5;
+                player.itemsList.Remove(weapon);
             }
             else if (weapon.GetType() == typeof(Sword))
             {
                 MonsterPower -= 2;
             }
-            weapon.NumberUsageKey--;
-            if (weapon.NumberUsageKey < 1)
-            {
-                itemsList.Remove(weapon);
-            }
-            if (MonsterPower > 0)
-            {
-                Console.WriteLine($"The beast is hurt, its current power is {MonsterPower}.\nYou have to fight igen.");
-            }
-            else
-            {
-                Console.WriteLine("The bastard is dead, Congratulations");
-            }
-            Thread.Sleep(1200);            
         }
-
-       
-
         public bool IsBoxAvailable()
         {
-            Game game = new Game();
-            foreach (var item in itemsList)
+            foreach (var item in player.itemsList)
             {
                 if (item.GetType() == typeof(Bomb) || item.GetType() == typeof(Sword))
                 {
+                    FightMonster(item);
                     item.NumberUsageKey--;
                     if (item.NumberUsageKey == 0)
                     {
-                        itemsList.Remove(item);
+                        player.itemsList.Remove(item);
                     }
                     return true;
                 }

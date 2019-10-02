@@ -26,7 +26,7 @@
 
         public override bool IsBoxAvailable()
         {
-            return true;            
+            return true;
         }
     }
 }

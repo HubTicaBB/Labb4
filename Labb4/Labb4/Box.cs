@@ -1,6 +1,6 @@
 ﻿namespace Labb4
 {
-    internal abstract class Box : Player, IAvailable
+    internal abstract class Box : IAvailable
     {
         public Symbols Symbol { get; set; }
         public Items Item { get; set; }
