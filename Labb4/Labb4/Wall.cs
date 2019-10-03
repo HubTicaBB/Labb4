@@ -4,10 +4,13 @@ using System.Threading;
 namespace Labb4
 {
     class Wall : Box
-    {        
-        public Wall(Symbols symbol) : base(symbol)
+    {
+        //int PositionX { get; set; }
+        //int PositionY { get; set; }
+        public Wall(Symbols symbol, int positionX, int positionY) : base(symbol, positionX, positionY)
         {
             this.Symbol = symbol;
+
         }
 
         public override bool IsBoxAvailable(Player player)

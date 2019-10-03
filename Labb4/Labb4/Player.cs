@@ -47,7 +47,7 @@ namespace Labb4
         public void ChangePosition(int newRowPosition, int newColPosition, Box[,] mapWithObjects)
         {
             //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
-            mapWithObjects[PositionRow, PositionCol] = new Room(Symbols.Room);
+            mapWithObjects[PositionRow, PositionCol] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newRowPosition;
             PositionCol = newColPosition;
             Box currentBox = mapWithObjects[PositionRow, PositionCol];

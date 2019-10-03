@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Labb4
 {
     internal class Game
     {
         public List<Player> players = new List<Player>();
-        
+        public List<Box> boxList = new List<Box>();
+
 
         private char[,] map = new char[,]
         {
@@ -72,11 +71,14 @@ namespace Labb4
                 {
                     if (map[row, col] == '#')
                     {
-                        box = new Wall(Symbols.Wall);
+                        box = new Wall(Symbols.Wall, row, col);
+                        boxList.Add(box);
+
                     }
                     else if (map[row, col] == 'D')
                     {
-                        box = new Door(Symbols.Door);
+                        box = new Door(Symbols.Door, row, col);
+                        boxList.Add(box);
                     }
                     //else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
                     //{
@@ -97,7 +99,8 @@ namespace Labb4
                     }
                     else if (map[row, col] == '-')
                     {
-                        box = new Room(Symbols.Room);
+                        box = new Room(Symbols.Room, row, col);
+                        boxList.Add(box);
                     }
                     //}                    
                     else if (map[row, col] == '?')
@@ -109,8 +112,8 @@ namespace Labb4
                         switch (roomType)
                         {
                             case 1:
-                                box = new Room(Symbols.Surprise);
-                                //boxlist.Add(box)
+                                box = new Room(Symbols.Surprise, row, col);
+                                boxList.Add(box);
                                 break;
                             case 2:
                                 Monster monster = new Monster();
@@ -137,13 +140,15 @@ namespace Labb4
                                 box = new Room(Symbols.Surprise, items);
                                 break;
                             default:
-                                box = new Room(Symbols.Room);
+                                box = new Room(Symbols.Room, row, col);
+                                boxList.Add(box);
                                 break;
                         }
                     }
                     else
                     {
-                        box = new Exit(Symbols.Exit);
+                        box = new Exit(Symbols.Exit, row, col);
+                        boxList.Add(box);
                     }
                     mapWithObjects[row, col] = box;
                 }
@@ -156,15 +161,15 @@ namespace Labb4
             {
                 for (int col = 0; col < map.GetLength(1); col++)
                 {
-                    //for (int i = 0; i < boxList; i++)
-                    //{
-                    //    if (boxList[i].positionX == row && boxList[i].positionY == col) 
-                    //    {
-                    //        console.Write(b(char)oxList[i].Symbol + " ");
-                    //    }
-                    //}
-                    mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
-                    Console.Write((char)mapWithObjects[row, col].Symbol + " ");
+                    for (int i = 0; i < boxList.Count; i++)
+                    {
+                        if (boxList[i].PositionX == row && boxList[i].PositionY == col)
+                        {
+                            Console.Write((char)boxList[i].Symbol + " ");
+                        }
+                    }
+                    //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
+                    //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
             }

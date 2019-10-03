@@ -2,7 +2,7 @@
 {
     internal class Room : Box
     {
-        public Room(Symbols symbol) : base(symbol)
+        public Room(Symbols symbol, int positionX, int positionY) : base(symbol, positionX, positionY)
         {
             this.Symbol = symbol;
         }
@@ -20,7 +20,7 @@
         }
 
         public override bool IsBoxAvailable(Player player)
-        {           
+        {
             return true;
         }
     }
