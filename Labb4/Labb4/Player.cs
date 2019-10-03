@@ -39,6 +39,11 @@ namespace Labb4
             PositionCol = positionCol;
         }
 
+        public Player(Symbols symbol)
+        {
+
+        }
+
         public void CreateObjects()
         {
             Box box;
