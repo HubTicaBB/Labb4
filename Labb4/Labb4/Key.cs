@@ -7,6 +7,11 @@
             this.NumberUsageKey = numberUsageKey;
         }
 
+        //public void ReduceNumberUsage()
+        //{
+        //    NumberUsageKey--;
+        //}
+
         public override string ToString()
         {
             return $"Key: ";

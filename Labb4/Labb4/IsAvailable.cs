@@ -2,6 +2,6 @@
 {
     interface IAvailable
     {
-        bool IsBoxAvailable();
+        bool IsBoxAvailable(Player player);
     }
 }

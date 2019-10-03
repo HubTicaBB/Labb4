@@ -19,7 +19,7 @@
             this.Item = items;
         }
 
-        public override bool IsBoxAvailable()
+        public override bool IsBoxAvailable(Player player)
         {           
             return true;
         }
