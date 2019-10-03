@@ -8,7 +8,6 @@ namespace Labb4
 {
     class SuperKey : Items
     {
-        public int NumberUsageKey { get; set; }
         public SuperKey(int numberUsageKey) : base(numberUsageKey)
         {
             this.NumberUsageKey = numberUsageKey;

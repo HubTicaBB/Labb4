@@ -4,10 +4,12 @@ using System.Threading;
 using System.Linq;
 
 namespace Labb4
+
 {
     internal class Player 
     {
         public List<Items> itemsList = new List<Items>(); //ni skulle kunna flytta detta till en bas klass, och bara behålla PLayer metoder i player klassen
+
 
         public string Name { get; set; }
         public int MovesLeft { get; set; }
