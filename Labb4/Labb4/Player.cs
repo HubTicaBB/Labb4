@@ -6,9 +6,10 @@ using System.Linq;
 namespace Labb4
 
 {
-    internal class Player
+    internal class Player 
     {
-        public List<Items> itemsList = new List<Items>();
+        public List<Items> itemsList = new List<Items>(); //ni skulle kunna flytta detta till en bas klass, och bara behålla PLayer metoder i player klassen
+
 
         public string Name { get; set; }
         public int MovesLeft { get; set; }
@@ -55,9 +56,13 @@ namespace Labb4
                     {
                         box = new Wall(Symbols.Wall);
                     }
-                    else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
+                    else if (map[row, col] == 'D')
                     {
-                        if (map[row, col] == 'M')
+                        box = new Door(Symbols.Door);
+                    }
+                    //else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
+                    //{
+                       else if (map[row, col] == 'M')
                         {
                             Monster monster = new Monster();
                             box = new Room(Symbols.Monster, monster);
@@ -72,15 +77,11 @@ namespace Labb4
                             SuperKey superKey = new SuperKey(3);
                             box = new Room(Symbols.SuperKey, superKey);
                         }
-                        else
+                        else if (map[row, col] == '-')
                         {
                             box = new Room(Symbols.Room);
                         }
-                    }
-                    else if (map[row, col] == 'D')
-                    {
-                        box = new Door(Symbols.Door);
-                    }
+                    //}                    
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
@@ -146,16 +147,29 @@ namespace Labb4
 
         public void Legend()
         {
-            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:", -12} {MovesLeft}\n\nItems:");
-           
-            var doubles = from item in itemsList
-                          group item by item.GetType() into nGroup
-                          select new { Name = nGroup.First(), Count = nGroup.Count() };
+            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {Name} \n{"Moves left:",-12} {MovesLeft}\n\nItems:");
 
-            foreach (var item in doubles)
+            //var doubles = from item in itemsList
+            //              group item by item.GetType() into nGroup
+            //              select new { Name = nGroup.First(), Count = nGroup.Count() };
+            //
+            //foreach (var item in doubles)
+            //{
+            //    Console.WriteLine($"{item.Name,-12} {item.Count}");
+            //}
+        }
+
+        public bool CheckIfKeyIsAvailable()
+        {
+            foreach (var item in itemsList)
             {
-                Console.WriteLine($"{item.Name,-12} {item.Count}");
+                if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
+                {
+                    
+                    return true;
+                }
             }
+            return false;
         }
 
         public void Play()
@@ -189,9 +203,9 @@ namespace Labb4
         }
 
         public void CheckIfPositionisAvailable(int rowPosition, int colPosition)
-        {
+        {            
             if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable())
-            {
+            {               
                 ChangePosition(rowPosition, colPosition);                
             }            
         }
