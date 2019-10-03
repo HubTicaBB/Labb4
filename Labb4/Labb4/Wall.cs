@@ -10,7 +10,7 @@ namespace Labb4
             this.Symbol = symbol;
         }
 
-        public override bool IsBoxAvailable()
+        public override bool IsBoxAvailable(Player player)
         {
             Console.WriteLine($"\nYou reached a wall. Try another command!");
             Thread.Sleep(1200);

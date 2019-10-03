@@ -8,15 +8,13 @@ namespace Labb4
         public Door(Symbols symbol) : base(symbol)
         {
             this.Symbol = symbol;
-            Name = "door";
+            
         }
 
-        public override bool IsBoxAvailable()
-
+        public override bool IsBoxAvailable(Player player)
         {
-            return true;
-            if (CheckIfKeyIsAvailable())
-            {
+            if (player.HasKey()) //kolla om spelaren håller i en nyckel
+            {                
                 return true;
             }
             else
@@ -24,8 +22,7 @@ namespace Labb4
                 Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
                 Thread.Sleep(1000);
                 return false;
-            }
-            
+            }            
         }
     }
 }
