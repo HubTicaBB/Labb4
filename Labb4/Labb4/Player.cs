@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Labb4
-{   
-    internal class Player 
-    {        
+{
+    internal class Player
+    {
         public string Name { get; set; }
         public int MovesLeft { get; set; }
         public int PositionRow { get; set; }
-        public int PositionCol { get; set; }        
+        public int PositionCol { get; set; }
 
         public Player(string name, int movesLeft, int positionRow, int positionCol)
         {
@@ -49,7 +46,8 @@ namespace Labb4
 
         public void ChangePosition(int newRowPosition, int newColPosition, Box[,] mapWithObjects)
         {
-            mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;            
+            //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
+            mapWithObjects[PositionRow, PositionCol] = new Room(Symbols.Room);
             PositionRow = newRowPosition;
             PositionCol = newColPosition;
             Box currentBox = mapWithObjects[PositionRow, PositionCol];
@@ -59,7 +57,7 @@ namespace Labb4
                 item = currentBox.Item;
                 PickUpItem(item, currentBox);
             }
-            
+
             MovesLeft--;
         }
 
@@ -78,7 +76,7 @@ namespace Labb4
                 }
             }
             return false;
-        }   
+        }
 
         public List<Items> itemsList = new List<Items>();
         internal virtual void PickUpItem(Items item, Box box)
