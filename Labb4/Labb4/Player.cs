@@ -69,7 +69,7 @@ namespace Labb4
             {
                 if (item is Key || item is SuperKey)
                 {
-                    item.NumberUsageKey--;
+                    item.NumberUsageKey -= 1;
                     if (item.NumberUsageKey == 0)
                     {
                         itemsList.Remove(item);
