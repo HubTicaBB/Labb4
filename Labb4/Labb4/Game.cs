@@ -85,17 +85,20 @@ namespace Labb4
                     else if (map[row, col] == 'M')
                     {
                         Monster monster = new Monster();
-                        box = new Room(Symbols.Monster, monster);
+                        box = new Room(Symbols.Monster, monster, row, col);
+                        boxList.Add(box);
                     }
                     else if (map[row, col] == 'k')
                     {
                         Key key = new Key(1);
-                        box = new Room(Symbols.Key, key);
+                        box = new Room(Symbols.Key, key, row, col);
+                        boxList.Add(box);
                     }
                     else if (map[row, col] == 'K')
                     {
                         SuperKey superKey = new SuperKey(3);
-                        box = new Room(Symbols.SuperKey, superKey);
+                        box = new Room(Symbols.SuperKey, superKey, row, col);
+                        boxList.Add(box);
                     }
                     else if (map[row, col] == '-')
                     {
@@ -117,27 +120,33 @@ namespace Labb4
                                 break;
                             case 2:
                                 Monster monster = new Monster();
-                                box = new Room(Symbols.Surprise, monster);
+                                box = new Room(Symbols.Surprise, monster, row, col);
+                                boxList.Add(box);
                                 break;
                             case 3:
                                 items = new Key(1);
-                                box = new Room(Symbols.Surprise, items);
+                                box = new Room(Symbols.Surprise, items, row, col);
+                                boxList.Add(box);
                                 break;
                             case 4:
                                 items = new Potion(1);
-                                box = new Room(Symbols.Surprise, items);
+                                box = new Room(Symbols.Surprise, items, row, col);
+                                boxList.Add(box);
                                 break;
                             case 5:
                                 items = new Trap(1); // Change it so that it doesn't act as an item
-                                box = new Room(Symbols.Surprise, items);
+                                box = new Room(Symbols.Surprise, items, row, col);
+                                boxList.Add(box);
                                 break;
                             case 6:
                                 items = new Sword(1);
-                                box = new Room(Symbols.Surprise, items);
+                                box = new Room(Symbols.Surprise, items, row, col);
+                                boxList.Add(box);
                                 break;
                             case 7:
                                 items = new Bomb(1);
-                                box = new Room(Symbols.Surprise, items);
+                                box = new Room(Symbols.Surprise, items, row, col);
+                                boxList.Add(box);
                                 break;
                             default:
                                 box = new Room(Symbols.Room, row, col);
@@ -196,7 +205,6 @@ namespace Labb4
             {
                 if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
                 {
-
                     return true;
                 }
             }

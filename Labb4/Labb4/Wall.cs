@@ -5,12 +5,9 @@ namespace Labb4
 {
     class Wall : Box
     {
-        //int PositionX { get; set; }
-        //int PositionY { get; set; }
         public Wall(Symbols symbol, int positionX, int positionY) : base(symbol, positionX, positionY)
         {
             this.Symbol = symbol;
-
         }
 
         public override bool IsBoxAvailable(Player player)

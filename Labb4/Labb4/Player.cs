@@ -9,12 +9,14 @@ namespace Labb4
         public int PositionRow { get; set; }
         public int PositionCol { get; set; }
 
+
         public Player(string name, int movesLeft, int positionRow, int positionCol)
         {
             Name = name;
             MovesLeft = movesLeft;
             PositionRow = positionRow;
             PositionCol = positionCol;
+
         }
 
         //public void NewGame()

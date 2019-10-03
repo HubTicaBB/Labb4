@@ -15,16 +15,21 @@
             PositionY = positionY;
         }
 
-        public Box(Symbols symbol, Items item)
+        public Box(Symbols symbol, Items item, int positionX, int positionY)
         {
             this.Symbol = symbol;
             this.Item = item;
+            PositionX = positionX;
+            PositionY = positionY;
+
         }
 
-        public Box(Symbols symbol, Monster monster)
+        public Box(Symbols symbol, Monster monster, int positionX, int positionY)
         {
             this.Symbol = symbol;
             this.Monster = monster;
+            PositionX = positionX;
+            PositionY = positionY;
         }
 
         public abstract bool IsBoxAvailable(Player player);

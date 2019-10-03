@@ -7,13 +7,13 @@
             this.Symbol = symbol;
         }
 
-        public Room(Symbols symbol, Monster monster) : base(symbol, monster)
+        public Room(Symbols symbol, Monster monster, int positionX, int positionY) : base(symbol, monster, positionX, positionY)
         {
             this.Symbol = symbol;
             this.Monster = monster;
         }
 
-        public Room(Symbols symbol, Items items) : base(symbol, items)
+        public Room(Symbols symbol, Items items, int positionX, int positionY) : base(symbol, items, positionX, positionY)
         {
             this.Symbol = symbol;
             this.Item = items;
