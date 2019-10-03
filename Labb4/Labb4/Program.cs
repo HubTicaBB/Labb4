@@ -7,10 +7,7 @@ namespace Labb4
     {        
         static void Main(string[] args)
         {
-            Game game = new Game();
-            game.players.Add(new Player("Andreea", 100, 3, 3));
-            game.players.Add(new Player("Tijana", 100, 3, 3));
-            game.players.Add(new Player("Pontus", 100, 3, 3));
+            Game game = new Game();            
             NewGame(game.players);
         }
 

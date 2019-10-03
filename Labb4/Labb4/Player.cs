@@ -4,6 +4,7 @@ using System.Threading;
 using System.Linq;
 
 namespace Labb4
+
 {
     internal class Player
     {
