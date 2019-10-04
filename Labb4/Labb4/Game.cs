@@ -13,7 +13,7 @@ namespace Labb4
         private char[,] map = new char[,]
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '-','-','-', '-', '-', 'E', '#'},
                 {'#', '-', 's', 'M','D','D', 'D', '-', '-', '#'},
                 {'#', '-', 'b', 'M','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', 's','-','-', '-', 'b', '-', '#'},
@@ -56,6 +56,7 @@ namespace Labb4
                 // om objektet är Exit --> play = false
             }
 
+            Console.Clear();
             Console.WriteLine("Does anyone else want to play? (yes/no)");
             string answer = Console.ReadLine();
             // TODO: Check if answer is yes eller no
@@ -250,19 +251,19 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
+                    return (Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
-                    return true;
+                    //return true;
                 case 'a':
-                    Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
+                    return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
                     return true;
                 case 's':
-                    Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
+                    return (Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
                     return true;
                 case 'd':
-                    Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
+                    return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
                     return true;
                 case 'q':
@@ -275,7 +276,7 @@ namespace Labb4
             }
         }
 
-        public void Move(int newPositionRow, int newPositionCol)
+        public bool Move(int newPositionRow, int newPositionCol)
         {
             int index = 0;
             for (int i = 0; i < boxList.Count; i++)
@@ -290,18 +291,20 @@ namespace Labb4
             {
                 if (box.PositionX == newPositionRow && box.PositionY == newPositionCol)
                 {
-                    CheckIfPositionisAvailable(box, boxList, index);
+                    return (CheckIfPositionisAvailable(box, boxList, index));
                     break;
                 }
             }
+            return true;
         }
 
-        public void CheckIfPositionisAvailable(Box nextBox, List<Box> boxList, int index)
+        public bool CheckIfPositionisAvailable(Box nextBox, List<Box> boxList, int index)
         {
             if (nextBox.IsBoxAvailable(players[players.Count - 1]))
             {
-                players[players.Count - 1].ChangePosition(nextBox, boxList, index);
+                return (players[players.Count - 1].ChangePosition(nextBox, boxList, index));
             }
+            return true;
         }
 
         //public void CheckIfPositionisAvailable(int rowPosition, int colPosition)

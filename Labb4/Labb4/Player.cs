@@ -47,21 +47,31 @@ namespace Labb4
         //    }
         //}
 
-        public void ChangePosition(Box newBox, List<Box> boxList, int index)
-        {
-            //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
+        public bool ChangePosition(Box newBox, List<Box> boxList, int index)
+        {                        
             boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newBox.PositionX;
             PositionCol = newBox.PositionY;
             if (newBox.Item != null)
             {
                 PickUpItem(newBox.Item, newBox);
+                return true;
             }
             if (newBox.Monster != null)
             {
-                FightMonster();
+                FightMonster(); // skicka newBox som argument, för att kunna ändra boxens monsters styrka i metoden
+                return true;
+            }
+            if (newBox is Exit)
+            {
+                Console.WriteLine("YOU WON! CONGRATULATIONS!");
+                Console.WriteLine($"Your points: {MovesLeft}");
+                Console.WriteLine("Press any key ... ");
+                Console.ReadKey(true);
+                return false;
             }
             MovesLeft--;
+            return true;
         }
 
         //public void ChangePosition(int newRowPosition, int newColPosition, Box[,] mapWithObjects)
@@ -150,7 +160,7 @@ namespace Labb4
         }
 
 
-        public void FightMonster()
+        public void FightMonster() // Här ska vi ha newBox som parameter
         {
             bool inputValid = false;
             string input = null;
@@ -164,11 +174,11 @@ namespace Labb4
                 //Console.ReadKey();
                 if (inputValid)
                 {
-                    switch (input)
+                    switch (input)  // Bryta ner sakerna i båda cases till en  metod (uprepande)
                     {
                         case "bomb":
                             {
-                                Console.WriteLine("using bomb");
+                                Console.WriteLine("using bomb");  // lägga till text om fight
                                 //minska moves left + cw
                                 itemsList[index].NumberUsageItem -= 1;
                                 if (itemsList[index].NumberUsageItem == 0)
@@ -176,19 +186,29 @@ namespace Labb4
                                     itemsList.Remove(itemsList[index]);
                                 }
                                 inputValid = true;
-
+                                // newBox.Monster.MonsterPower -= 10;
+                                // om det är 0 eller mindre, ta bort monster                                
                             }
                             break;
                         case "sword":
                             {
-                                Console.WriteLine("using sword");
+                                Console.WriteLine("using sword"); // lägga till text om fight
                                 itemsList[index].NumberUsageItem -= 1;
                                 if (itemsList[index].NumberUsageItem == 0)
                                 {
                                     itemsList.Remove(itemsList[index]);
                                 }
                                 inputValid = true;
+                                // newBox.Monster.MonsterPower -= 2;
+                                // om det är 0 eller mindre, ta bort monster
 
+                                // ELLER:
+
+                                // Tvinga spelaren att kämpa igen, tills monster är död, annars kan han inte lämna rummet
+                                // dvs. köra case i en loop
+
+                                // Lägga till info att man är hämtat i en "trap" ät det finns ingen utgång innan man besegrar monster
+                                // 
                             }
                             break;
                             //default:
