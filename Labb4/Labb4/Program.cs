@@ -10,6 +10,9 @@ namespace Labb4
             Game game = new Game();
             game.NewGame();
 
+            Console.WriteLine("Press any key to close the console...");
+            Console.ReadKey(true);
+
             //Console.Write("Enter your name: ");
             //string name = Console.ReadLine();
             //Player newPlayer = new Player(name, 100, 3, 3);

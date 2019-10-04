@@ -40,15 +40,19 @@ namespace Labb4
             Console.Write("Enter your name: ");
             string name = Console.ReadLine();
             //TODO: Validera namnet
-            players.Add(new Player(name, 100, 2, 1));
-            bool play = true;
+            players.Add(new Player(name, 100, 2, 1));            
             CreateObjects();
+            bool play = true;
             while (play)
             {
-                Play();
+                play = Play();
                 if (players[players.Count - 1].MovesLeft == 0)
                 {
                     play = false;
+                }
+                if (!play)
+                {
+                    boxList.Clear();
                 }
                 // om objektet är Exit --> play = false
             }
@@ -59,6 +63,15 @@ namespace Labb4
             if (answer == "yes")
             {
                 NewGame();
+            }
+            else
+            {
+                Console.WriteLine("Good bye");
+                // TODO: skriv ut highscores, sort objects by movesLeft descending with LINQ
+                foreach (var player in players)
+                {
+                    Console.WriteLine($"{player.Name} - {player.MovesLeft}");
+                }
             }
         }
 
@@ -215,7 +228,7 @@ namespace Labb4
             return false;
         }
 
-        public void Play()
+        public bool Play()
         {
             Console.Clear();
             PrintMap();
@@ -227,25 +240,26 @@ namespace Labb4
                 case 'w':
                     Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
-                    break;
+                    return true;
                 case 'a':
                     Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
-                    break;
+                    return true;
                 case 's':
                     Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
-                    break;
+                    return true;
                 case 'd':
                     Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
-                    break;
+                    return true;
                 case 'q':
-                    Console.WriteLine("\n\nGame over!");
-                    return;
+                    Console.WriteLine("\n\nGame over, you have lost all your points!");
+                    players[players.Count - 1].MovesLeft = 0;
+                    return false;
                 default:
                     Console.Write("\nInvalid input, try again: ");
-                    break;
+                    return true;
             }
         }
 
