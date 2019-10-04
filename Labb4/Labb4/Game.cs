@@ -174,6 +174,10 @@ namespace Labb4
                     {
                         if (boxList[i].PositionX == row && boxList[i].PositionY == col)
                         {
+                            if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
+                            {
+                                boxList[i].Symbol = Symbols.Player;
+                            }
                             Console.Write((char)boxList[i].Symbol + " ");
                         }
                     }
