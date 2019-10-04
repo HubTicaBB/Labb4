@@ -4,7 +4,7 @@
     {
         public Trap(int numberUsageKey) : base(numberUsageKey)
         {
-            this.NumberUsageKey = numberUsageKey;
+            this.NumberUsageItem = numberUsageKey;
         }
 
         public override string ToString()

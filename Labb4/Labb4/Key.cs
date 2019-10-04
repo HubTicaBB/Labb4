@@ -4,7 +4,7 @@
     {
         public Key(int numberUsageKey) : base(numberUsageKey)
         {
-            this.NumberUsageKey = numberUsageKey;
+            this.NumberUsageItem = numberUsageKey;
         }
 
         //public void ReduceNumberUsage()

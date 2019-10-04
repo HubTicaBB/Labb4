@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Labb4
+﻿namespace Labb4
 {
     enum Symbols
     {
@@ -17,6 +11,7 @@ namespace Labb4
         Bomb = 'b',
         Monster = 'M',
         Surprise = '?',
-        Player = '@'
+        Player = '@',
+        Sword = 's'
     }
 }

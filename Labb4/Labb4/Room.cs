@@ -1,4 +1,7 @@
-﻿namespace Labb4
+﻿using System;
+using System.Threading;
+
+namespace Labb4
 {
     internal class Room : Box
     {
@@ -27,7 +30,23 @@
 
         public override bool IsBoxAvailable(Player player)
         {
+            if (Monster != null)
+            {
+                if (player.HasWeapon())
+                {
+                    //player.FightMonster();
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("\nYou do not have a weapon!\nGo around and pick up a weapon.");
+                    Thread.Sleep(1000);
+                    return false;
+                }
+            }
             return true;
         }
+
+
     }
 }

@@ -10,7 +10,7 @@ namespace Labb4
     {
         public SuperKey(int numberUsageKey) : base(numberUsageKey)
         {
-            this.NumberUsageKey = numberUsageKey;
+            this.NumberUsageItem = numberUsageKey;
         }
 
         //public void ReduceNumberUsage()

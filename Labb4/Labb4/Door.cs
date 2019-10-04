@@ -19,7 +19,7 @@ namespace Labb4
             }
             else
             {
-                Console.WriteLine("There is no key. \nYou have to go around and pick up a key.");
+                Console.WriteLine("\nThere is no key. \nYou have to go around and pick up a key.");
                 Thread.Sleep(1000);
                 return false;
             }

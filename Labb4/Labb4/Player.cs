@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Labb4
 {
@@ -51,12 +52,15 @@ namespace Labb4
             //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
             boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newBox.PositionX;
-            PositionCol = newBox.PositionY;           
+            PositionCol = newBox.PositionY;
             if (newBox.Item != null)
-            {                
+            {
                 PickUpItem(newBox.Item, newBox);
             }
-
+            if (newBox.Monster != null)
+            {
+                FightMonster();
+            }
             MovesLeft--;
         }
 
@@ -83,8 +87,8 @@ namespace Labb4
             {
                 if (item is Key || item is SuperKey)
                 {
-                    item.NumberUsageKey -= 1;
-                    if (item.NumberUsageKey == 0)
+                    item.NumberUsageItem -= 1;
+                    if (item.NumberUsageItem == 0)
                     {
                         itemsList.Remove(item);
                     }
@@ -94,11 +98,113 @@ namespace Labb4
             return false;
         }
 
+        public bool HasWeapon()
+        {
+            foreach (var item in itemsList)
+            {
+                if (item is Bomb || item is Sword)
+                {
+                    //item.NumberUsageItem -= 1;
+                    //if (item.NumberUsageItem == 0)
+                    //{
+                    //    itemsList.Remove(item);
+                    //}
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsWeaponInTheList(string input, out int weaponsIndex)
+        {
+            //foreach (var item in itemsList)
+            //{
+            //    Console.WriteLine("item get type" + item.GetType().Name.ToString().ToLower());
+            //    Console.ReadKey();
+            //    if (input == item.GetType().Name.ToString().ToLower())
+            //    {
+            //        weaponsIndex = item;
+            //        return true;
+            //    }
+            //}
+
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                Console.WriteLine("item get type" + itemsList[i].GetType().Name.ToString().ToLower());
+                Console.ReadKey();
+                if (input == itemsList[i].GetType().Name.ToString().ToLower())
+                {
+                    weaponsIndex = i;
+                    return true;
+                }
+            }
+            weaponsIndex = -1;
+            return false;
+        }
+
         public List<Items> itemsList = new List<Items>();
         internal virtual void PickUpItem(Items item, Box box)
         {
             itemsList.Add(item);
-            box.Item = null;
+            //box.Item = null;
+        }
+
+
+        public void FightMonster()
+        {
+            bool inputValid = false;
+            string input = null;
+            Console.WriteLine("\nYou are aproaching a room with a monster\nChoose a weapon to fight the beast!");
+            while (!inputValid)
+            {
+                input = Console.ReadLine().ToLower().Trim();
+                int index;
+                inputValid = IsWeaponInTheList(input, out index);
+                //Console.WriteLine("inputvalid is " + inputValid);
+                //Console.ReadKey();
+                if (inputValid)
+                {
+                    switch (input)
+                    {
+                        case "bomb":
+                            {
+                                Console.WriteLine("using bomb");
+                                //minska moves left + cw
+                                itemsList[index].NumberUsageItem -= 1;
+                                if (itemsList[index].NumberUsageItem == 0)
+                                {
+                                    itemsList.Remove(itemsList[index]);
+                                }
+                                inputValid = true;
+
+                            }
+                            break;
+                        case "sword":
+                            {
+                                Console.WriteLine("using sword");
+                                itemsList[index].NumberUsageItem -= 1;
+                                if (itemsList[index].NumberUsageItem == 0)
+                                {
+                                    itemsList.Remove(itemsList[index]);
+                                }
+                                inputValid = true;
+
+                            }
+                            break;
+                            //default:
+                            //    Console.WriteLine("You have to choose a weapon you have in your legend.");
+                            //    break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("You have to choose a weapon you have in your legend.");
+                }
+            }
+
+
+
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Labb4
 {
@@ -15,10 +14,10 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','D','D', 'D', '-', '-', '#'},
-                {'#', '?', '-', '-','-','-', '-', '?', '-', '#'},
-                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '-','-','M', '-', 'K', '-', '#'},
+                {'#', '-', 's', 'M','D','D', 'D', '-', '-', '#'},
+                {'#', '-', 'b', 'M','-','-', '-', '?', '-', '#'},
+                {'#', '-', '-', 's','-','-', '-', 'b', '-', '#'},
+                {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
@@ -40,7 +39,7 @@ namespace Labb4
             Console.Write("Enter your name: ");
             string name = Console.ReadLine();
             //TODO: Validera namnet
-            players.Add(new Player(name, 100, 2, 1));            
+            players.Add(new Player(name, 100, 2, 1));
             CreateObjects();
             bool play = true;
             while (play)
@@ -113,6 +112,19 @@ namespace Labb4
                         box = new Room(Symbols.SuperKey, superKey, row, col);
                         boxList.Add(box);
                     }
+                    else if (map[row, col] == 's')
+                    {
+                        Items items = new Sword(10);
+                        box = new Room(Symbols.Sword, items, row, col);
+                        boxList.Add(box);
+
+                    }
+                    else if (map[row, col] == 'b')
+                    {
+                        Items items = new Bomb(1);
+                        box = new Room(Symbols.Bomb, items, row, col);
+                        boxList.Add(box);
+                    }
                     else if (map[row, col] == '-')
                     {
                         box = new Room(Symbols.Room, row, col);
@@ -152,7 +164,7 @@ namespace Labb4
                                 boxList.Add(box);
                                 break;
                             case 6:
-                                items = new Sword(1);
+                                items = new Sword(10);
                                 box = new Room(Symbols.Surprise, items, row, col);
                                 boxList.Add(box);
                                 break;
@@ -216,17 +228,17 @@ namespace Labb4
             }
         }
 
-        public bool CheckIfKeyIsAvailable()
-        {
-            foreach (var item in players[players.Count - 1].itemsList)
-            {
-                if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //public bool CheckIfKeyIsAvailable()
+        //{
+        //    foreach (var item in players[players.Count - 1].itemsList)
+        //    {
+        //        if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         public bool Play()
         {
@@ -273,9 +285,9 @@ namespace Labb4
                     index = i;
                     break;
                 }
-            }            
+            }
             foreach (var box in boxList)
-            {  
+            {
                 if (box.PositionX == newPositionRow && box.PositionY == newPositionCol)
                 {
                     CheckIfPositionisAvailable(box, boxList, index);
