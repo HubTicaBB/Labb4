@@ -46,22 +46,36 @@ namespace Labb4
         //    }
         //}
 
-        public void ChangePosition(int newRowPosition, int newColPosition, Box[,] mapWithObjects)
+        public void ChangePosition(Box newBox, List<Box> boxList, int index)
         {
             //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
-            mapWithObjects[PositionRow, PositionCol] = new Room(Symbols.Room, PositionRow, PositionCol);
-            PositionRow = newRowPosition;
-            PositionCol = newColPosition;
-            Box currentBox = mapWithObjects[PositionRow, PositionCol];
-            Items item;
-            if (currentBox.Item != null)
-            {
-                item = currentBox.Item;
-                PickUpItem(item, currentBox);
+            boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
+            PositionRow = newBox.PositionX;
+            PositionCol = newBox.PositionY;           
+            if (newBox.Item != null)
+            {                
+                PickUpItem(newBox.Item, newBox);
             }
 
             MovesLeft--;
         }
+
+        //public void ChangePosition(int newRowPosition, int newColPosition, Box[,] mapWithObjects)
+        //{
+        //    //mapWithObjects[PositionRow, PositionCol].Symbol = Symbols.Room;
+        //    mapWithObjects[PositionRow, PositionCol] = new Room(Symbols.Room, PositionRow, PositionCol);
+        //    PositionRow = newRowPosition;
+        //    PositionCol = newColPosition;
+        //    Box currentBox = mapWithObjects[PositionRow, PositionCol];
+        //    Items item;
+        //    if (currentBox.Item != null)
+        //    {
+        //        item = currentBox.Item;
+        //        PickUpItem(item, currentBox);
+        //    }
+
+        //    MovesLeft--;
+        //}
 
         public bool HasKey()
         {

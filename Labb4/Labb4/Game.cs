@@ -15,7 +15,7 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', 'D','D','D', 'D', '-', '-', '#'},
+                {'#', '-', '-', '-','D','D', 'D', '-', '-', '#'},
                 {'#', '?', '-', '-','-','-', '-', '?', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '-','-','M', '-', 'K', '-', '#'},
@@ -40,7 +40,7 @@ namespace Labb4
             Console.Write("Enter your name: ");
             string name = Console.ReadLine();
             //TODO: Validera namnet
-            players.Add(new Player(name, 100, 3, 3));
+            players.Add(new Player(name, 100, 2, 1));
             bool play = true;
             CreateObjects();
             while (play)
@@ -110,7 +110,7 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        Thread.Sleep(2000);
+                        //Thread.Sleep(2000);
                         Items items;
                         switch (roomType)
                         {
@@ -225,16 +225,20 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
+                    Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
+                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
                     break;
                 case 'a':
-                    CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
+                    Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
+                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
                     break;
                 case 's':
-                    CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
+                    Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
+                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
                     break;
                 case 'd':
-                    CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
+                    Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
+                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
                     break;
                 case 'q':
                     Console.WriteLine("\n\nGame over!");
@@ -245,12 +249,42 @@ namespace Labb4
             }
         }
 
-        public void CheckIfPositionisAvailable(int rowPosition, int colPosition)
+        public void Move(int newPositionRow, int newPositionCol)
         {
-            if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable(players[players.Count - 1]))
+            int index = 0;
+            for (int i = 0; i < boxList.Count; i++)
             {
-                players[players.Count - 1].ChangePosition(rowPosition, colPosition, mapWithObjects);
+                if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
+                {
+                    index = i;
+                    break;
+                }
+            }            
+            foreach (var box in boxList)
+            {  
+                if (box.PositionX == newPositionRow && box.PositionY == newPositionCol)
+                {
+                    CheckIfPositionisAvailable(box, boxList, index);
+                    break;
+                }
             }
         }
+
+        public void CheckIfPositionisAvailable(Box nextBox, List<Box> boxList, int index)
+        {
+            if (nextBox.IsBoxAvailable(players[players.Count - 1]))
+            {
+                players[players.Count - 1].ChangePosition(nextBox, boxList, index);
+            }
+        }
+
+        //public void CheckIfPositionisAvailable(int rowPosition, int colPosition)
+        //{
+
+        //    if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable(players[players.Count - 1]))
+        //    {
+        //        players[players.Count - 1].ChangePosition(rowPosition, colPosition, mapWithObjects);
+        //    }
+        //}
     }
 }
