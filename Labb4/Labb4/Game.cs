@@ -257,15 +257,12 @@ namespace Labb4
                 case 'a':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
-                    return true;
                 case 's':
                     return (Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
-                    return true;
                 case 'd':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1));
                     //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
-                    return true;
                 case 'q':
                     Console.WriteLine("\n\nGame over, you have lost all your points!");
                     players[players.Count - 1].MovesLeft = 0;
@@ -291,14 +288,13 @@ namespace Labb4
             {
                 if (box.PositionX == newPositionRow && box.PositionY == newPositionCol)
                 {
-                    return (CheckIfPositionisAvailable(box, boxList, index));
-                    break;
+                    return (CheckIfPositionIsAvailable(box, boxList, index));
                 }
             }
             return true;
         }
 
-        public bool CheckIfPositionisAvailable(Box nextBox, List<Box> boxList, int index)
+        public bool CheckIfPositionIsAvailable(Box nextBox, List<Box> boxList, int index)
         {
             if (nextBox.IsBoxAvailable(players[players.Count - 1]))
             {
