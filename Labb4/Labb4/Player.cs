@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Labb4
 {
@@ -19,13 +20,17 @@ namespace Labb4
         }
 
         public bool ChangePosition(Box newBox, List<Box> boxList, int index)
-        {                        
+        {
             boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newBox.PositionX;
             PositionCol = newBox.PositionY;
             if (newBox.Item != null)
             {
                 PickUpItem(newBox.Item, newBox);
+                if (newBox.Item is Potion)
+                {
+                    HasPotion();
+                }
                 return true;
             }
             if (newBox.Monster != null)
@@ -77,7 +82,7 @@ namespace Labb4
         public bool IsWeaponInTheList(string input, out int weaponsIndex)
         {
             for (int i = 0; i < itemsList.Count; i++)
-            {                
+            {
                 if (input == itemsList[i].GetType().Name.ToString().ToLower())
                 {
                     weaponsIndex = i;
@@ -153,6 +158,27 @@ namespace Labb4
                     Console.WriteLine("You have to choose a weapon you have in your legend.");
                 }
             }
+        }
+
+
+        public bool HasPotion()
+        {
+            foreach (var item in itemsList)
+            {
+                if (item is Potion)
+                {
+                    MovesLeft += 5;
+                    Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra moves to complete your quest!");
+                    Thread.Sleep(600);
+                    item.NumberUsageItem -= 1;
+                    if (item.NumberUsageItem == 0)
+                    {
+                        itemsList.Remove(item);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

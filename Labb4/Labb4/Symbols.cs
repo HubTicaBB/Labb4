@@ -12,6 +12,8 @@
         Monster = 'M',
         Surprise = '?',
         Player = '@',
-        Sword = 's'
+        Sword = 's',
+        Potion = 'p',
+        Trap = 't',
     }
 }

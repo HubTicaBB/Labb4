@@ -16,7 +16,7 @@ namespace Labb4
                 {'#', '-', '-', '-','-','-', '-', '-', 'E', '#'},
                 {'#', '-', 's', 'M','D','D', 'D', '-', '-', '#'},
                 {'#', '-', 'b', 'M','-','-', '-', '?', '-', '#'},
-                {'#', '-', '-', 's','-','-', '-', 'b', '-', '#'},
+                {'#', '-', 'p', 's','-','-', '-', 'b', '-', '#'},
                 {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
@@ -124,6 +124,12 @@ namespace Labb4
                     {
                         Items items = new Bomb(1);
                         box = new Room(Symbols.Bomb, items, row, col);
+                        boxList.Add(box);
+                    }
+                    else if (map[row, col] == 'p')
+                    {
+                        Items items = new Potion(1);
+                        box = new Room(Symbols.Potion, items, row, col);
                         boxList.Add(box);
                     }
                     else if (map[row, col] == '-')
@@ -252,17 +258,17 @@ namespace Labb4
             {
                 case 'w':
                     return (Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol));
-                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
-                    //return true;
+                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
+                //return true;
                 case 'a':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1));
-                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
+                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
                 case 's':
                     return (Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol));
-                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
+                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
                 case 'd':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1));
-                    //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
+                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
                 case 'q':
                     Console.WriteLine("\n\nGame over, you have lost all your points!");
                     players[players.Count - 1].MovesLeft = 0;
