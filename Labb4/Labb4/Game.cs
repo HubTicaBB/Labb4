@@ -14,9 +14,9 @@ namespace Labb4
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
                 {'#', '-', '-', '-','-','-', '-', '-', 'E', '#'},
-                {'#', '-', 's', 'M','D','D', 'D', '-', '-', '#'},
-                {'#', '-', 'b', 'M','-','-', '-', '?', '-', '#'},
-                {'#', '-', 'p', 's','-','-', '-', 'b', '-', '#'},
+                {'#', '-', 'b', '-','D','D', 'D', '-', '-', '#'},
+                {'#', '-', '-', 'p','-','-', '-', '?', '-', '#'},
+                {'#', '-', 't', 's','-','-', '-', 'b', '-', '#'},
                 {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
                 {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
                 {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
@@ -130,6 +130,12 @@ namespace Labb4
                     {
                         Items items = new Potion(1);
                         box = new Room(Symbols.Potion, items, row, col);
+                        boxList.Add(box);
+                    }
+                    else if (map[row, col] == 't')
+                    {
+                        Items items = new Trap(1); // Change it so that it doesn't act as an item
+                        box = new Room(Symbols.Trap, items, row, col);
                         boxList.Add(box);
                     }
                     else if (map[row, col] == '-')

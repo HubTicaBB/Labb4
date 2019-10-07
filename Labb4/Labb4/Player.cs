@@ -31,6 +31,10 @@ namespace Labb4
                 {
                     HasPotion();
                 }
+                if (newBox.Item is Trap)
+                {
+                    FoundTrap();
+                }
                 return true;
             }
             if (newBox.Monster != null)
@@ -169,12 +173,29 @@ namespace Labb4
                 {
                     MovesLeft += 5;
                     Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra moves to complete your quest!");
-                    Thread.Sleep(600);
+                    Thread.Sleep(1000);
                     item.NumberUsageItem -= 1;
                     if (item.NumberUsageItem == 0)
                     {
                         itemsList.Remove(item);
                     }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool FoundTrap()
+        {
+            foreach (var item in itemsList)
+            {
+                if (item is Trap)
+                {
+                    MovesLeft -= 10;
+                    itemsList.Remove(item);
+                    Console.WriteLine("\nOh noooo! You fell in a huge hole!\nThere is a wooden stair on the wall so you can climb back." +
+                        "\nThat costs you 10 moves.");
+                    Thread.Sleep(1500);
                     return true;
                 }
             }
