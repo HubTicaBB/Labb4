@@ -34,13 +34,17 @@ namespace Labb4
         //    players.Add(newPlayer);
         //}
 
-        public void NewGame()
+        Player player;
+        internal void NewGame()
         {
-            Console.Write("Enter your name: ");
+            Console.Write($"PLAYER {players.Count + 1}\nEnter your name: ");
             string name = Console.ReadLine();
             //TODO: Validera namnet
-            players.Add(new Player(name, 100, 2, 1));
+            player = new Player(name, 100, 3, 3);
+            players.Add(player);
+
             CreateObjects();
+
             bool play = true;
             while (play)
             {
@@ -53,27 +57,47 @@ namespace Labb4
                 {
                     boxList.Clear();
                 }
-                // om objektet är Exit --> play = false
             }
 
             Console.Clear();
             Console.WriteLine("Does anyone else want to play? (yes/no)");
-            string answer = Console.ReadLine();
-            // TODO: Check if answer is yes eller no
-            if (answer == "yes")
+            bool invalidAnswer = true;
+            while (invalidAnswer)
             {
-                NewGame();
-            }
-            else
-            {
-                Console.WriteLine("Good bye");
-                // TODO: skriv ut highscores, sort objects by movesLeft descending with LINQ
-                foreach (var player in players)
+                string answer = Console.ReadLine().Trim().ToLower();
+                if (answer == "yes" || answer == "y")
                 {
-                    Console.WriteLine($"{player.Name} - {player.MovesLeft}");
+                    NewGame();
+                    invalidAnswer = false;
+                }
+                else if (answer == "no" || answer == "n")
+                {
+                    Console.WriteLine("\nGAME OVER!");
+                    PrintHighscores();
+                    invalidAnswer = false;
+                }
+                else
+                {
+                    Console.Write("Invalid! Write yes or no: ");
                 }
             }
         }
+
+        private void PrintHighscores()
+        {
+            var highscores = from player in players
+                             orderby player.MovesLeft descending
+                             select player;
+
+            Console.WriteLine($"\n---------------------------------\n| {"RANK",-4} |    {"PLAYER",-10}|  {"SCORE"}  |\n---------------------------------");
+            int rank = 1;
+            foreach (var player in highscores)
+            {
+                Console.WriteLine($"|   {rank,-2} | {player.Name,-12} | {player.MovesLeft,4}    |");
+                rank++;
+            }
+            Console.WriteLine($"---------------------------------");
+        }       
 
         public void CreateObjects()
         {
