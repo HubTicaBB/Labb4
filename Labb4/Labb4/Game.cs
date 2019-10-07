@@ -13,14 +13,14 @@ namespace Labb4
         private char[,] map = new char[,]
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', 'E', '#'},
-                {'#', '-', 'b', '-','D','D', 'D', '-', '-', '#'},
-                {'#', '-', '-', 'p','-','-', '-', '?', '-', '#'},
-                {'#', '-', 't', 's','-','-', '-', 'b', '-', '#'},
-                {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
-                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '-', '-', '#', '#', '-', '-', 'E', '#'},
+                {'#', '-', 'b', '-', 'D', 'D', 'D', '#', '#', '#'},
+                {'#', '-', '-', 'p', '#', '#', '-', '?', '-', '#'},
+                {'#', '-', 't', 's', '-', '-', '-', 'b', '-', '#'},
+                {'#', '-', '-', '-', 'b', 'M', '-', 'K', '-', '#'},
+                {'#', '-', 'k', '-', '-', '-', '-', '-', '-', '#'},
+                {'#', '-', '-', '?', '-', '-', '-', '?', '-', '#'},
+                {'#', '-', '-', '-', '-', '-', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
 
@@ -99,7 +99,7 @@ namespace Labb4
             Console.WriteLine($"---------------------------------");
         }       
 
-        public void CreateObjects()
+        private void CreateObjects()
         {
             Box box;
             Items item;
@@ -202,30 +202,56 @@ namespace Labb4
             }
         }
 
-        public void PrintMap()
+        private void PrintMap()
         {
-            for (int row = 0; row < map.GetLength(0); row++)
+            foreach (var box in boxList)
             {
-                for (int col = 0; col < map.GetLength(1); col++)
+                if (box.PositionX == player.PositionRow && box.PositionY == player.PositionCol)
                 {
-                    for (int i = 0; i < boxList.Count; i++)
-                    {
-                        if (boxList[i].PositionX == row && boxList[i].PositionY == col)
-                        {
-                            if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
-                            {
-                                boxList[i].Symbol = Symbols.Player;
-                            }
-                            Console.Write((char)boxList[i].Symbol + " ");
-                        }
-                    }
-                    //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
-                    //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
+                    box.Symbol = Symbols.Player;
                 }
-                Console.WriteLine();
+                if (box.PositionY == 0)
+                {
+                    Console.WriteLine();
+                }
+                if ((box.Symbol == Symbols.Player) ||
+                    (box is Wall) ||
+                    (box.PositionX == player.PositionRow && (box.PositionY == player.PositionCol - 1 || box.PositionY == player.PositionCol + 1)) ||
+                    (box.PositionY == player.PositionCol && (box.PositionX == player.PositionRow - 1 || box.PositionX == player.PositionRow + 1)))
+                {
+                    Console.Write($"{(char)box.Symbol} ");
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
             }
             Legend();
         }
+        //public void PrintMap()
+        //{
+        //    for (int row = 0; row < map.GetLength(0); row++)
+        //    {
+        //        for (int col = 0; col < map.GetLength(1); col++)
+        //        {
+        //            for (int i = 0; i < boxList.Count; i++)
+        //            {
+        //                if (boxList[i].PositionX == row && boxList[i].PositionY == col)
+        //                {
+        //                    if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
+        //                    {
+        //                        boxList[i].Symbol = Symbols.Player;
+        //                    }
+        //                    Console.Write((char)boxList[i].Symbol + " ");
+        //                }
+        //            }
+        //            //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
+        //            //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //    Legend();
+        //}
 
         public void Legend()
         {
