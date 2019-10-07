@@ -102,6 +102,7 @@ namespace Labb4
         public void CreateObjects()
         {
             Box box;
+            Items item;
             for (int row = 0; row < map.GetLength(0); row++)
             {
                 for (int col = 0; col < map.GetLength(1); col++)
@@ -109,119 +110,94 @@ namespace Labb4
                     if (map[row, col] == '#')
                     {
                         box = new Wall(Symbols.Wall, row, col);
-                        boxList.Add(box);
-
                     }
                     else if (map[row, col] == 'D')
                     {
                         box = new Door(Symbols.Door, row, col);
-                        boxList.Add(box);
                     }
-                    //else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
-                    //{
                     else if (map[row, col] == 'M')
                     {
                         Monster monster = new Monster();
                         box = new Room(Symbols.Monster, monster, row, col);
-                        boxList.Add(box);
                     }
                     else if (map[row, col] == 'k')
                     {
-                        Key key = new Key(1);
-                        box = new Room(Symbols.Key, key, row, col);
-                        boxList.Add(box);
+                        item = new Key(1);
+                        box = new Room(Symbols.Key, item, row, col);
                     }
                     else if (map[row, col] == 'K')
                     {
-                        SuperKey superKey = new SuperKey(3);
-                        box = new Room(Symbols.SuperKey, superKey, row, col);
-                        boxList.Add(box);
+                        item = new SuperKey(3);
+                        box = new Room(Symbols.SuperKey, item, row, col);
                     }
                     else if (map[row, col] == 's')
                     {
-                        Items items = new Sword(10);
-                        box = new Room(Symbols.Sword, items, row, col);
-                        boxList.Add(box);
-
+                        item = new Sword(10);
+                        box = new Room(Symbols.Sword, item, row, col);
                     }
                     else if (map[row, col] == 'b')
                     {
-                        Items items = new Bomb(1);
-                        box = new Room(Symbols.Bomb, items, row, col);
-                        boxList.Add(box);
+                        item = new Bomb(1);
+                        box = new Room(Symbols.Bomb, item, row, col);
                     }
                     else if (map[row, col] == 'p')
                     {
-                        Items items = new Potion(1);
-                        box = new Room(Symbols.Potion, items, row, col);
-                        boxList.Add(box);
+                        item = new Potion(1);
+                        box = new Room(Symbols.Potion, item, row, col);
                     }
                     else if (map[row, col] == 't')
                     {
-                        Items items = new Trap(1); // Change it so that it doesn't act as an item
-                        box = new Room(Symbols.Trap, items, row, col);
-                        boxList.Add(box);
+                        item = new Trap(1);
+                        box = new Room(Symbols.Trap, item, row, col);
                     }
                     else if (map[row, col] == '-')
                     {
                         box = new Room(Symbols.Room, row, col);
-                        boxList.Add(box);
                     }
-                    //}                    
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        //Thread.Sleep(2000);
-                        Items items;
+                        // TODO: Thread.Sleep(2000);
                         switch (roomType)
                         {
                             case 1:
                                 box = new Room(Symbols.Surprise, row, col);
-                                boxList.Add(box);
                                 break;
                             case 2:
                                 Monster monster = new Monster();
                                 box = new Room(Symbols.Surprise, monster, row, col);
-                                boxList.Add(box);
                                 break;
                             case 3:
-                                items = new Key(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Key(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 4:
-                                items = new Potion(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Potion(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 5:
-                                items = new Trap(1); // Change it so that it doesn't act as an item
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Trap(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 6:
-                                items = new Sword(10);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Sword(10);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 7:
-                                items = new Bomb(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Bomb(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             default:
                                 box = new Room(Symbols.Room, row, col);
-                                boxList.Add(box);
                                 break;
                         }
                     }
                     else
                     {
                         box = new Exit(Symbols.Exit, row, col);
-                        boxList.Add(box);
                     }
-                    mapWithObjects[row, col] = box;
+                    boxList.Add(box);
                 }
             }
         }
