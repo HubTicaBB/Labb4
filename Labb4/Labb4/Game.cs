@@ -34,16 +34,11 @@ namespace Labb4
         //    players.Add(newPlayer);
         //}
 
-        Player player;
+        
         internal void NewGame()
         {
-            Console.Write($"PLAYER {players.Count + 1}\nEnter your name: ");
-            string name = Console.ReadLine();
-            //TODO: Validera namnet
-            player = new Player(name, 100, 3, 3);
-            players.Add(player);
-
             CreateObjects();
+            AddPlayer();            
 
             bool play = true;
             while (play)
@@ -81,6 +76,16 @@ namespace Labb4
                     Console.Write("Invalid! Write yes or no: ");
                 }
             }
+        }
+
+        Player player;
+        private void AddPlayer()
+        {
+            Console.Write($"PLAYER {players.Count + 1}\nEnter your name: ");
+            string name = Console.ReadLine();
+            //TODO: Validera namnet
+            player = new Player(name, 100, 3, 3);
+            players.Add(player);
         }
 
         private void PrintHighscores()
