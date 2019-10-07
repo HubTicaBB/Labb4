@@ -39,7 +39,7 @@ namespace Labb4
             }
             if (newBox.Monster != null)
             {
-                FightMonster(); // skicka newBox som argument, för att kunna ändra boxens monsters styrka i metoden
+                FightMonster(newBox);
                 return true;
             }
             if (newBox is Exit)
@@ -103,63 +103,67 @@ namespace Labb4
             itemsList.Add(item);
         }
 
-        public void FightMonster() // Här ska vi ha newBox som parameter
+        public void FightMonster(Box newBox)
         {
             bool inputValid = false;
+            bool monsterIsDead = false;
             string input = null;
-            Console.WriteLine("\nYou are aproaching a room with a monster\nChoose a weapon to fight the beast!");
-            while (!inputValid)
+            Console.WriteLine($"\nYou are aproaching a room with a monster.It has {newBox.Monster.Power} life points. " +
+                $"\nChoose a weapon to fight the beast!");
+            while (!inputValid || !monsterIsDead)
             {
                 input = Console.ReadLine().ToLower().Trim();
                 int index;
                 inputValid = IsWeaponInTheList(input, out index);
                 if (inputValid)
                 {
-                    switch (input)  // Bryta ner sakerna i båda cases till en metod (uprepande)
+                    switch (input)
                     {
                         case "bomb":
                             {
-                                Console.WriteLine("using bomb");  // lägga till text om fight
-                                //minska moves left + cw
+                                newBox.Monster.Power -= 10;
+                                MovesLeft -= 5;
+                                Console.WriteLine("\nWow!That was a clever choice! \nThe bomb that you used killed the beast!" +
+                                    "\nUnfortunatelly you got injured so you lost 5 moves.");
+                                Thread.Sleep(3000);
+                                if (newBox.Monster.Power <= 0)
+                                {
+                                    monsterIsDead = true;
+                                }
                                 itemsList[index].NumberUsageItem -= 1;
                                 if (itemsList[index].NumberUsageItem == 0)
                                 {
                                     itemsList.Remove(itemsList[index]);
                                 }
                                 inputValid = true;
-                                // newBox.Monster.MonsterPower -= 10;
-                                // om det är 0 eller mindre, ta bort monster                                
                             }
                             break;
                         case "sword":
                             {
-                                Console.WriteLine("using sword"); // lägga till text om fight
+                                newBox.Monster.Power -= 5;
+                                Console.WriteLine($"\nYou managed to damage the monster, so now it has {newBox.Monster.Power} life points." +
+                                $"\nBut you are traped with the beast so you have to continue using your weapon until you distroy it!!");
+                                if (newBox.Monster.Power <= 0)
+                                {
+                                    Console.WriteLine("\nThat was a difficult fight but you killed the evil beast! " +
+                                        "\nYou got injured so you lost 5 move, but you can continue your quest!");
+                                    Thread.Sleep(3000);
+                                    MovesLeft -= 5;
+                                    monsterIsDead = true;
+                                }
                                 itemsList[index].NumberUsageItem -= 1;
                                 if (itemsList[index].NumberUsageItem == 0)
                                 {
                                     itemsList.Remove(itemsList[index]);
                                 }
                                 inputValid = true;
-                                // newBox.Monster.MonsterPower -= 2;
-                                // om det är 0 eller mindre, ta bort monster
-
-                                // ELLER:
-
-                                // Tvinga spelaren att kämpa igen, tills monster är död, annars kan han inte lämna rummet
-                                // dvs. köra case i en loop
-
-                                // Lägga till info att man är hämtat i en "trap" ät det finns ingen utgång innan man besegrar monster
-                                // 
                             }
                             break;
-                            //default:
-                            //    Console.WriteLine("You have to choose a weapon you have in your legend.");
-                            //    break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("You have to choose a weapon you have in your legend.");
+                    Console.WriteLine("You have to choose a weapon you have in your legend and kill the monster!");
                 }
             }
         }
