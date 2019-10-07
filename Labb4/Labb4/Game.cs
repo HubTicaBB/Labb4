@@ -13,14 +13,14 @@ namespace Labb4
         private char[,] map = new char[,]
         {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', 'E', '#'},
-                {'#', '-', 'b', '-','D','D', 'D', '-', '-', '#'},
-                {'#', '-', '-', 'p','-','-', '-', '?', '-', '#'},
-                {'#', '-', 't', 's','-','-', '-', 'b', '-', '#'},
-                {'#', '-', '-', '-','b','M', '-', 'K', '-', '#'},
-                {'#', '-', 'k', '-','-','-', '-', '-', '-', '#'},
-                {'#', '-', '-', '?','-','-', '-', '?', '-', '#'},
-                {'#', '-', '-', '-','-','-', '-', '-', '-', '#'},
+                {'#', '-', '#', '?','-','-', '#', 'D', 'E', '#'},
+                {'#', 'b', '#', 'D','k','s', '#', 'D', 'M', '#'},
+                {'#', '-', 'k', '-','-','k', '?', '-', '-', '#'},
+                {'#', 'M', 'D', '-','-','-', '-', 'b', 's', '#'},
+                {'#', '-', 'k', '-','-','-', 'K', '-', 'k', '#'},
+                {'#', 'D', 'D', '-','b','-', '-', '#', '#', '#'},
+                {'#', 'b', 'p', '?','-','D', 'M', '?', '-', '#'},
+                {'#', 'k', '-', '-','-','?', '-', '-', '-', '#'},
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
 
@@ -39,7 +39,8 @@ namespace Labb4
             Console.Write("Enter your name: ");
             string name = Console.ReadLine();
             //TODO: Validera namnet
-            players.Add(new Player(name, 100, 2, 1));
+            players.Add(new Player(name, 100, 4, 4));
+            InstructionsForUser(name);
             CreateObjects();
             bool play = true;
             while (play)
@@ -229,7 +230,7 @@ namespace Labb4
 
         public void Legend()
         {
-            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {players[players.Count - 1].Name} \n{"Moves left:",-12} {players[players.Count - 1].MovesLeft}\n\nItems:");
+            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {players[players.Count - 1].Name} \n{"Life points:",-12} {players[players.Count - 1].MovesLeft}\n\nItems:");
 
             var doubles = from item in players[players.Count - 1].itemsList
                           group item by item.GetType() into nGroup
@@ -323,5 +324,22 @@ namespace Labb4
         //        players[players.Count - 1].ChangePosition(rowPosition, colPosition, mapWithObjects);
         //    }
         //}
+
+        public void InstructionsForUser(string name)
+        {
+            Console.Clear();
+            Console.WriteLine($"Hello {name}! Welcome to the dungeon crawler!" +
+                $"\n\nThis is a maze game where you (@) can move around using the following keys on the keyboard: " +
+                $"\na (move left), d (move right), w (move up) and s (move down). " +
+                $"\nEvery move costs you a life point and your goal is to have as many as possible when you find the Exit(E)." +
+                $"\n\nDuring your adventure you can pick up a one - use keys(k) that can help you open Doors(D) to magical rooms" +
+                $"\nwhere you can see the objects you can pick up or find surprises(?)." +
+                $"\n\nThere is also a special key(K) that you can use 3 times!" +
+                $"\nThe maze contains weapons: swords(s) and bombs(b) that you can use in order to kill evil Monsters(M)." +
+                $"\nFinding potions(p) will increase your life points, but watch out for the traps(t)!" +
+                $"\n\nGood luck!!" +
+                $"\n\nPress any key to start the game...");
+            Console.ReadKey(true);
+        }
     }
 }

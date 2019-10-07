@@ -177,7 +177,7 @@ namespace Labb4
                 {
                     MovesLeft += 5;
                     Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra moves to complete your quest!");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                     item.NumberUsageItem -= 1;
                     if (item.NumberUsageItem == 0)
                     {
@@ -199,7 +199,7 @@ namespace Labb4
                     itemsList.Remove(item);
                     Console.WriteLine("\nOh noooo! You fell in a huge hole!\nThere is a wooden stair on the wall so you can climb back." +
                         "\nThat costs you 10 moves.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(2000);
                     return true;
                 }
             }
