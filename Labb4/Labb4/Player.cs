@@ -130,11 +130,7 @@ namespace Labb4
                                 {
                                     monsterIsDead = true;
                                 }
-                                itemsList[index].NumberUsageItem -= 1;
-                                if (itemsList[index].NumberUsageItem == 0)
-                                {
-                                    itemsList.Remove(itemsList[index]);
-                                }
+                                ReduceNumberOfItemUsages(index);
                                 inputValid = true;
                             }
                             break;
@@ -151,11 +147,7 @@ namespace Labb4
                                     MovesLeft -= 5;
                                     monsterIsDead = true;
                                 }
-                                itemsList[index].NumberUsageItem -= 1;
-                                if (itemsList[index].NumberUsageItem == 0)
-                                {
-                                    itemsList.Remove(itemsList[index]);
-                                }
+                                ReduceNumberOfItemUsages(index);
                                 inputValid = true;
                             }
                             break;
@@ -168,6 +160,14 @@ namespace Labb4
             }
         }
 
+        private void ReduceNumberOfItemUsages(int index)
+        {
+            itemsList[index].NumberUsageItem -= 1;
+            if (itemsList[index].NumberUsageItem == 0)
+            {
+                itemsList.Remove(itemsList[index]);
+            }
+        }
 
         public bool HasPotion()
         {
