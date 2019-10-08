@@ -38,8 +38,9 @@ namespace Labb4
         
         internal void NewGame()
         {
-            CreateObjects();
-            AddPlayer();            
+            AddPlayer();
+            InstructionsForUser(player.Name);
+            CreateObjects();                   
 
             Console.WriteLine("\nPress any key to start the game...");
             Console.ReadKey();
