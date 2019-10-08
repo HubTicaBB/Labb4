@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Labb4
 {
@@ -155,7 +156,7 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        // TODO: aktivera½!!!!!!!Thread.Sleep(2000);
+                        Thread.Sleep(2000);
                         switch (roomType)
                         {
                             case 1:
@@ -290,7 +291,8 @@ namespace Labb4
                     player.MovesLeft = 0;
                     return false;
                 default:
-                    Console.Write("\nInvalid input, try again: ");
+                    Console.Write("\nInvalid input, try again!");
+                    Thread.Sleep(250);
                     return true;
             }
         }
