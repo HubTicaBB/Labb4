@@ -156,7 +156,7 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        Thread.Sleep(2000);
+                        Thread.Sleep(2000);//testa att pausa i en millisekund
                         switch (roomType)
                         {
                             case 1:
@@ -297,7 +297,7 @@ namespace Labb4
             }
         }
 
-        public bool Move(int newPositionRow, int newPositionCol)
+        public bool Move(int newPositionRow, int newPositionCol) //Move gör mer än att flytta på spelet, Så kanske updategame istället. eller något liknande.
         {
             int index = 0;
             for (int i = 0; i < boxList.Count; i++)

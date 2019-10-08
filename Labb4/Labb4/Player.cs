@@ -19,7 +19,8 @@ namespace Labb4
             PositionCol = positionCol;
         }
 
-        public bool ChangePosition(Box newBox, List<Box> boxList, int index)
+        public bool ChangePosition(Box newBox, List<Box> boxList, int index) //Uppdaterar spelar objektet. Antingen byta till ett namn
+                                                                             //som reflekterar det. eller bryta ut i fler metoder med specifika namn
         {
             boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newBox.PositionX;
@@ -42,7 +43,7 @@ namespace Labb4
                 FightMonster(newBox);
                 return true;
             }
-            if (newBox is Exit)
+            if (newBox is Exit) //att kolla när spelet ska ta slut, och ha det på åett och samma stället är en bra idé
             {
                 Console.WriteLine("YOU WON! CONGRATULATIONS!");
                 Console.WriteLine($"Your points: {MovesLeft}");
