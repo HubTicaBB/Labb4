@@ -1,5 +1,17 @@
 ﻿using System;
 
+//Highscores
+//--------------------------------
+//| RANK |    PLAYER   |  SCORE  |
+//--------------------------------
+//|   1  | Tijana      |   87    |
+//|   2  | Andreea     |   83    |
+//|   3  | Tijana      |   77    |
+//--------------------------------
+
+// Labb 4: Andreea Nenciu och Tijana Ilic
+
+
 namespace Labb4
 {
     class Program

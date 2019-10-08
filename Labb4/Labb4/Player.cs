@@ -19,8 +19,7 @@ namespace Labb4
             PositionCol = positionCol;
         }
 
-        public bool ChangePosition(Box newBox, List<Box> boxList, int index) //Uppdaterar spelar objektet. Antingen byta till ett namn
-                                                                             //som reflekterar det. eller bryta ut i fler metoder med specifika namn
+        public bool CreatePlayerEvent(Box newBox, List<Box> boxList, int index)
         {
             boxList[index] = new Room(Symbols.Room, PositionRow, PositionCol);
             PositionRow = newBox.PositionX;
@@ -43,11 +42,9 @@ namespace Labb4
                 FightMonster(newBox);
                 return true;
             }
-            if (newBox is Exit) //att kolla när spelet ska ta slut, och ha det på åett och samma stället är en bra idé
+            if (newBox is Exit)
             {
-                Console.WriteLine("YOU WON! CONGRATULATIONS!");
-                Console.WriteLine($"Your points: {MovesLeft}");
-                Console.WriteLine("Press any key ... ");
+                Console.WriteLine($"\nYou finished the quest!! \nCongratulations {Name} !! You got {MovesLeft} points.\n\nPress any key to continue... ");
                 Console.ReadKey(true);
                 return false;
             }

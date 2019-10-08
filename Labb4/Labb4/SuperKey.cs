@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Labb4
+﻿namespace Labb4
 {
     class SuperKey : Items
     {
@@ -12,11 +6,6 @@ namespace Labb4
         {
             this.NumberUsageItem = numberUsageKey;
         }
-
-        //public void ReduceNumberUsage()
-        //{
-        //    NumberUsageKey--;
-        //}
 
         public override string ToString()
         {

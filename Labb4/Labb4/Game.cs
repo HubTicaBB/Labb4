@@ -152,11 +152,11 @@ namespace Labb4
                     {
                         box = new Room(Symbols.Room, row, col);
                     }
-                    else if (map[row, col] == '?')
+                    else if (map[row, col] == '?') //randomize the surprise room that can become different items or a monster
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        Thread.Sleep(2000);//testa att pausa i en millisekund
+                        Thread.Sleep(10);
                         switch (roomType)
                         {
                             case 1:
@@ -212,6 +212,7 @@ namespace Labb4
                 {
                     Console.WriteLine();
                 }
+                //prints out the position of the player, the walls and the neighbouring positions of the player
                 if ((box.Symbol == Symbols.Player) ||
                     (box is Wall) ||
                     (box.PositionX == player.PositionRow && (box.PositionY == player.PositionCol - 1 || box.PositionY == player.PositionCol + 1)) ||
@@ -277,13 +278,13 @@ namespace Labb4
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    return (Move(player.PositionRow - 1, player.PositionCol));
+                    return (UpdatePlayerPosition(player.PositionRow - 1, player.PositionCol));
                 case 'a':
-                    return (Move(player.PositionRow, player.PositionCol - 1));
+                    return (UpdatePlayerPosition(player.PositionRow, player.PositionCol - 1));
                 case 's':
-                    return (Move(player.PositionRow + 1, player.PositionCol));
+                    return (UpdatePlayerPosition(player.PositionRow + 1, player.PositionCol));
                 case 'd':
-                    return (Move(player.PositionRow, player.PositionCol + 1));
+                    return (UpdatePlayerPosition(player.PositionRow, player.PositionCol + 1));
                 case 'l':
                     Legend();
                     return true;
@@ -297,7 +298,7 @@ namespace Labb4
             }
         }
 
-        public bool Move(int newPositionRow, int newPositionCol) //Move gör mer än att flytta på spelet, Så kanske updategame istället. eller något liknande.
+        public bool UpdatePlayerPosition(int newPositionRow, int newPositionCol)
         {
             int index = 0;
             for (int i = 0; i < boxList.Count; i++)
@@ -322,7 +323,7 @@ namespace Labb4
         {
             if (nextBox.IsBoxAvailable(player))
             {
-                return (player.ChangePosition(nextBox, boxList, index));
+                return (player.CreatePlayerEvent(nextBox, boxList, index));
             }
             return true;
         }
