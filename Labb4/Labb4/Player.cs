@@ -122,7 +122,7 @@ namespace Labb4
                                 newBox.Monster.Power -= 10;
                                 MovesLeft -= 5;
                                 Console.WriteLine("\nWow!That was a clever choice! \nThe bomb that you used killed the beast!" +
-                                    "\nUnfortunatelly you got injured so you lost 5 moves.");
+                                    "\nUnfortunately you got injured so you lost 5 life points.");
                                 Thread.Sleep(3000);
                                 if (newBox.Monster.Power <= 0)
                                 {
@@ -136,7 +136,7 @@ namespace Labb4
                             {
                                 newBox.Monster.Power -= 5;
                                 Console.WriteLine($"\nYou managed to damage the monster, so now it has {newBox.Monster.Power} life points." +
-                                $"\nBut you are traped with the beast so you have to continue using your weapon until you distroy it!!");
+                                $"\nBut you are trapped with the beast so you have to continue using your weapon until you destroy it!!");
                                 if (newBox.Monster.Power <= 0)
                                 {
                                     Console.WriteLine("\nThat was a difficult fight but you killed the evil beast! " +

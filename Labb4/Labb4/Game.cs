@@ -334,12 +334,13 @@ namespace Labb4
                 $"\n\nThis is a maze game where you (@) can move around using the following keys on the keyboard: " +
                 $"\na (move left), d (move right), w (move up) and s (move down). " +
                 $"\nEvery move costs you a life point and your goal is to have as many as possible when you find the Exit(E)." +
-                $"\n\nDuring your adventure you can pick up a one - use keys(k) that can help you open Doors(D) to rooms" +
+                $"\n\nDuring your adventure you can pick up one-use keys(k) that can help you open Doors(D) to rooms" +
                 $"\nwhere you can see the objects, empty rooms (-) or surprises(?)." +
                 $"\n\nThere is also a special key(K) that you can use 3 times!" +
                 $"\nThe maze contains weapons: swords(s) and bombs(b) that you can use in order to kill evil Monsters(M)." +
                 $"\nFinding potions(p) will increase your life points, but watch out for the traps(t)!" +
-                $"\nDuring the game you can press q at any time to exit game, but you lose all you life points." +
+                $"\n\nDuring the game you can press L at any time and that will show you the legend with all the symbols." +
+                $"\nOr you can press Q to exit game, but then you lose all you life points." +
                 $"\n\nGood luck!!");
         }
     }
