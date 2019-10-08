@@ -4,7 +4,7 @@
     {
         public Exit(Symbols symbol, int positionX, int positionY) : base(symbol, positionX, positionY)
         {
-            this.Symbol = symbol;
+            Symbol = symbol;
         }
 
         public override bool IsBoxAvailable(Player player)

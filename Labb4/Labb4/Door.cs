@@ -7,20 +7,19 @@ namespace Labb4
     {
         public Door(Symbols symbol, int positionX, int positionY) : base(symbol, positionX, positionY)
         {
-            this.Symbol = symbol;
-
+            Symbol = symbol;
         }
 
         public override bool IsBoxAvailable(Player player)
         {
-            if (player.HasKey()) //kolla om spelaren håller i en nyckel
+            if (player.HasKey())
             {
                 return true;
             }
             else
             {
                 Console.WriteLine("\nThere is no key. \nYou have to go around and pick up a key.");
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
                 return false;
             }
         }

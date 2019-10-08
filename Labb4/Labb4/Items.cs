@@ -3,9 +3,9 @@
     public class Items
     {
         public virtual int NumberUsageItem { get; set; }
-        public Items(int numberUsage)
+        public Items(int numberUsageItem)
         {
-            NumberUsageItem = numberUsage;
+            NumberUsageItem = numberUsageItem;
         }
     }
 }

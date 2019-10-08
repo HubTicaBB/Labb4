@@ -142,7 +142,7 @@ namespace Labb4
                                 if (newBox.Monster.Power <= 0)
                                 {
                                     Console.WriteLine("\nThat was a difficult fight but you killed the evil beast! " +
-                                        "\nYou got injured so you lost 5 move, but you can continue your quest!");
+                                        "\nYou got injured so you lost 5 life points, but you can continue your quest!");
                                     Thread.Sleep(3000);
                                     MovesLeft -= 5;
                                     monsterIsDead = true;
@@ -176,7 +176,7 @@ namespace Labb4
                 if (item is Potion)
                 {
                     MovesLeft += 5;
-                    Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra moves to complete your quest!");
+                    Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra life points to complete your quest!");
                     Thread.Sleep(2000);
                     item.NumberUsageItem -= 1;
                     if (item.NumberUsageItem == 0)
@@ -198,7 +198,7 @@ namespace Labb4
                     MovesLeft -= 10;
                     itemsList.Remove(item);
                     Console.WriteLine("\nOh noooo! You fell in a huge hole!\nThere is a wooden stair on the wall so you can climb back." +
-                        "\nThat costs you 10 moves.");
+                        "\nThat costs you 10 life points.");
                     Thread.Sleep(2000);
                     return true;
                 }

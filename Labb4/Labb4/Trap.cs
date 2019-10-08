@@ -2,9 +2,9 @@
 {
     class Trap : Items
     {
-        public Trap(int numberUsageKey) : base(numberUsageKey)
+        public Trap(int numberUsageItem) : base(numberUsageItem)
         {
-            this.NumberUsageItem = numberUsageKey;
+            this.NumberUsageItem = numberUsageItem;
         }
 
         public override string ToString()

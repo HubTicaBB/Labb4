@@ -2,9 +2,9 @@
 {
     class Bomb : Items
     {
-        public Bomb(int numberUsageKey) : base(numberUsageKey)
+        public Bomb(int numberOfUsages) : base(numberOfUsages)
         {
-            this.NumberUsageItem = numberUsageKey;
+            NumberUsageItem = numberOfUsages;
         }
 
         public override string ToString()

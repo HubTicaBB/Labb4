@@ -9,38 +9,25 @@ namespace Labb4
     {
         public List<Player> players = new List<Player>();
         public List<Box> boxList = new List<Box>();
-
-
         private char[,] map = new char[,]
         {
-                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-                {'#', '-', '#', '?','-','-', '#', 'D', 'E', '#'},
-                {'#', 'b', '#', 'D','k','s', '#', 'D', 'M', '#'},
-                {'#', '-', 'k', '-','-','k', '?', '-', '-', '#'},
-                {'#', 'M', 'D', '-','-','-', '-', 'b', 's', '#'},
-                {'#', '-', 'k', '-','-','-', 'K', '-', 'k', '#'},
-                {'#', 'D', 'D', '-','b','-', '-', '#', '#', '#'},
-                {'#', 'b', 'p', '?','-','D', 'M', '?', '-', '#'},
-                {'#', 'k', '-', '-','-','?', '-', '-', '-', '#'},
-                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+            {'#', '-', '#', '?','-','-', '#', 'D', 'E', '#'},
+            {'#', 'b', '#', 'D','k','s', '#', '-', 't', '#'},
+            {'#', '-', 'k', '-','-','k', '?', 'M', '-', '#'},
+            {'#', 'M', 'D', '-','-','-', '-', 'b', 's', '#'},
+            {'#', '-', 'k', '-','-','-', 'K', '-', 'k', '#'},
+            {'#', 'D', 'D', '-','b','-', '-', '#', '#', '#'},
+            {'#', 'b', 'p', '?','-','D', 'M', '?', '-', '#'},
+            {'#', 'k', '-', '-','-','?', '-', '-', '-', '#'},
+            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
 
-        public Box[,] mapWithObjects = new Box[10, 10];
-
-        //public void CreatePlayer()
-        //{
-        //    Console.Write("Enter your name: ");
-        //    string name = Console.ReadLine();
-        //    Player newPlayer = new Player(name, 100, 3, 3);
-        //    players.Add(newPlayer);
-        //}
-
-        
         internal void NewGame()
         {
             AddPlayer();
             InstructionsForUser(player.Name);
-            CreateObjects();                   
+            CreateObjects();
 
             Console.WriteLine("\nPress any key to start the game...");
             Console.ReadKey();
@@ -48,9 +35,12 @@ namespace Labb4
             while (play)
             {
                 play = Play();
-                if (players[players.Count - 1].MovesLeft == 0)
+                if (player.MovesLeft == 0)
                 {
                     play = false;
+                    Console.WriteLine("\nYou don't have any life points left, so your quest is over. Maybe you can try again later!" +
+                        "\nPress any key to continue...");
+                    Console.ReadKey();
                 }
                 if (!play)
                 {
@@ -77,7 +67,7 @@ namespace Labb4
                 }
                 else
                 {
-                    Console.Write("Invalid! Write yes or no: ");
+                    Console.Write("\nInvalid! Write yes or no: ");
                 }
             }
         }
@@ -87,8 +77,7 @@ namespace Labb4
         {
             Console.Write($"PLAYER {players.Count + 1}\nEnter your name: ");
             string name = Console.ReadLine();
-            //TODO: Validera namnet
-            player = new Player(name, 100, 3, 3);
+            player = new Player(name, 100, 4, 4);
             players.Add(player);
         }
 
@@ -106,11 +95,10 @@ namespace Labb4
                 rank++;
             }
             Console.WriteLine($"---------------------------------");
-        }       
+        }
 
         private void CreateObjects()
         {
-
             Box box;
             Items item;
             for (int row = 0; row < map.GetLength(0); row++)
@@ -169,7 +157,6 @@ namespace Labb4
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
                         Thread.Sleep(2000);
-                        Items items;
                         switch (roomType)
                         {
                             case 1:
@@ -239,64 +226,37 @@ namespace Labb4
             }
             Legend();
         }
-        //public void PrintMap()
-        //{
-        //    for (int row = 0; row < map.GetLength(0); row++)
-        //    {
-        //        for (int col = 0; col < map.GetLength(1); col++)
-        //        {
-        //            for (int i = 0; i < boxList.Count; i++)
-        //            {
-        //                if (boxList[i].PositionX == row && boxList[i].PositionY == col)
-        //                {
-        //                    if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
-        //                    {
-        //                        boxList[i].Symbol = Symbols.Player;
-        //                    }
-        //                    Console.Write((char)boxList[i].Symbol + " ");
-        //                }
-        //            }
-        //            //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
-        //            //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //    Legend();
-        //}
 
         public void Legend()
         {
-            Console.WriteLine($"\n\nLegend:\n\n{"Player name:",-12} {players[players.Count - 1].Name} \n{"Life points:",-12} {players[players.Count - 1].MovesLeft}\n\nItems:");
-
-            var doubles = from item in players[players.Count - 1].itemsList
+            Console.WriteLine($"\n\n{"Player name:",-12} {player.Name} \n{"Life points:",-12} {player.MovesLeft}\n\nItems:");
+            var doubles = from item in player.itemsList
                           group item by item.GetType() into nGroup
                           select new { Name = nGroup.First(), Count = nGroup.Count() };
-
             foreach (var item in doubles)
             {
                 Console.WriteLine($"{item.Name,-12} {item.Count}");
             }
         }
+
         public bool Play()
         {
             Console.Clear();
             PrintMap();
             Console.Write("\nCommand: ");
             ConsoleKeyInfo control = Console.ReadKey();
-
             switch (Char.ToLower(control.KeyChar))
             {
                 case 'w':
-                    return (Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol));
+                    return (Move(player.PositionRow - 1, player.PositionCol));
                 case 'a':
-                    return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1));
+                    return (Move(player.PositionRow, player.PositionCol - 1));
                 case 's':
-                    return (Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol));
+                    return (Move(player.PositionRow + 1, player.PositionCol));
                 case 'd':
-                    return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1));
+                    return (Move(player.PositionRow, player.PositionCol + 1));
                 case 'q':
-                    Console.WriteLine("\n\nGame over, you have lost all your points!");
-                    players[players.Count - 1].MovesLeft = 0;
+                    player.MovesLeft = 0;
                     return false;
                 default:
                     Console.Write("\nInvalid input, try again: ");
@@ -309,7 +269,7 @@ namespace Labb4
             int index = 0;
             for (int i = 0; i < boxList.Count; i++)
             {
-                if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
+                if (boxList[i].PositionX == player.PositionRow && boxList[i].PositionY == player.PositionCol)
                 {
                     index = i;
                     break;
@@ -327,9 +287,9 @@ namespace Labb4
 
         public bool CheckIfPositionIsAvailable(Box nextBox, List<Box> boxList, int index)
         {
-            if (nextBox.IsBoxAvailable(players[players.Count - 1]))
+            if (nextBox.IsBoxAvailable(player))
             {
-                return (players[players.Count - 1].ChangePosition(nextBox, boxList, index));
+                return (player.ChangePosition(nextBox, boxList, index));
             }
             return true;
         }
@@ -345,6 +305,7 @@ namespace Labb4
                 $"\n\nThere is also a special key(K) that you can use 3 times!" +
                 $"\nThe maze contains weapons: swords(s) and bombs(b) that you can use in order to kill evil Monsters(M)." +
                 $"\nFinding potions(p) will increase your life points, but watch out for the traps(t)!" +
+                $"\nDuring the game you can press q at any time to exit game, but you lose all you life points." +
                 $"\n\nGood luck!!");
         }
     }

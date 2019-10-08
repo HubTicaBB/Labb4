@@ -2,9 +2,9 @@
 {
     class Sword : Items
     {
-        public Sword(int numberUsageKey) : base(numberUsageKey)
+        public Sword(int numberUsageItem) : base(numberUsageItem)
         {
-            this.NumberUsageItem = numberUsageKey;
+            this.NumberUsageItem = numberUsageItem;
         }
 
         public override string ToString()

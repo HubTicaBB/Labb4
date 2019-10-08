@@ -2,9 +2,9 @@
 {
     class Potion : Items
     {
-        public Potion(int numberUsageKey) : base(numberUsageKey)
+        public Potion(int numberUsageItem) : base(numberUsageItem)
         {
-            this.NumberUsageItem = numberUsageKey;
+            this.NumberUsageItem = numberUsageItem;
         }
 
         public override string ToString()
