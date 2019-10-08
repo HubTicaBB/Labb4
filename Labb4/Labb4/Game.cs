@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Labb4
 {
@@ -156,7 +155,7 @@ namespace Labb4
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        Thread.Sleep(2000);
+                        // TODO: aktivera½!!!!!!!Thread.Sleep(2000);
                         switch (roomType)
                         {
                             case 1:
@@ -224,26 +223,55 @@ namespace Labb4
                     Console.Write("  ");
                 }
             }
-            Legend();
+            UserInformation();
         }
 
         public void Legend()
         {
-            Console.WriteLine($"\n\n{"Player name:",-12} {player.Name} \n{"Life points:",-12} {player.MovesLeft}\n\nItems:");
+            Console.Clear();
+            Console.WriteLine($"\n----------------------------\nLegend:" +
+                              $"\n----------------------------" +
+                              $"\n {(char)Symbols.Player,-2} Your position" +
+                              $"\n {(char)Symbols.Wall,-2} Wall" +
+                              $"\n {(char)Symbols.Door,-2} Door" +
+                              $"\n {(char)Symbols.Monster,-2} Monster" +
+                              $"\n {(char)Symbols.Key,-2} Key" +
+                              $"\n {(char)Symbols.SuperKey,-2} Super Key" +
+                              $"\n {(char)Symbols.Bomb,-2} Bomb" +
+                              $"\n {(char)Symbols.Sword,-2} Sword" +
+                              $"\n {(char)Symbols.Potion,-2} Potion" +
+                              $"\n {(char)Symbols.Trap,-2} Trap" +
+                              $"\n {(char)Symbols.Surprise,-2} Surprise" +
+                              $"\n----------------------------" +
+                              $"\n\nPress any key to continue...");
+            Console.ReadKey(true);
+        }
+        public void UserInformation()
+        {
+            Console.Write($"\n-------------------" +
+                          $"\n{"Player name:",-12} {player.Name} " +
+                          $"\n{"Life points:",-12} {player.MovesLeft}" +
+                          $"\n-------------------" +
+                          $"\nItems: ");
+            if (player.itemsList.Count == 0)
+            {
+                Console.Write(0);
+            }
             var doubles = from item in player.itemsList
                           group item by item.GetType() into nGroup
                           select new { Name = nGroup.First(), Count = nGroup.Count() };
             foreach (var item in doubles)
             {
-                Console.WriteLine($"{item.Name,-12} {item.Count}");
+                Console.Write($"\n{item.Name,-11}{item.Count}");
             }
+            Console.WriteLine("\n-------------------");
         }
 
         public bool Play()
         {
             Console.Clear();
             PrintMap();
-            Console.Write("\nCommand: ");
+            Console.Write("\n\nCommand: ");
             ConsoleKeyInfo control = Console.ReadKey();
             switch (Char.ToLower(control.KeyChar))
             {
@@ -255,6 +283,9 @@ namespace Labb4
                     return (Move(player.PositionRow + 1, player.PositionCol));
                 case 'd':
                     return (Move(player.PositionRow, player.PositionCol + 1));
+                case 'l':
+                    Legend();
+                    return true;
                 case 'q':
                     player.MovesLeft = 0;
                     return false;
