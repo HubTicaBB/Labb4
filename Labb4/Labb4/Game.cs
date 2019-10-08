@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Labb4
 {
@@ -42,6 +43,8 @@ namespace Labb4
             players.Add(new Player(name, 100, 4, 4));
             InstructionsForUser(name);
             CreateObjects();
+            Console.WriteLine("\nPress any key to start the game...");
+            Console.ReadKey();
             bool play = true;
             while (play)
             {
@@ -78,6 +81,7 @@ namespace Labb4
 
         public void CreateObjects()
         {
+
             Box box;
             for (int row = 0; row < map.GetLength(0); row++)
             {
@@ -94,8 +98,6 @@ namespace Labb4
                         box = new Door(Symbols.Door, row, col);
                         boxList.Add(box);
                     }
-                    //else if (map[row, col] == '-' || map[row, col] == 'M' || map[row, col] == 'k' || map[row, col] == 'K')
-                    //{
                     else if (map[row, col] == 'M')
                     {
                         Monster monster = new Monster();
@@ -135,7 +137,7 @@ namespace Labb4
                     }
                     else if (map[row, col] == 't')
                     {
-                        Items items = new Trap(1); // Change it so that it doesn't act as an item
+                        Items items = new Trap(1);
                         box = new Room(Symbols.Trap, items, row, col);
                         boxList.Add(box);
                     }
@@ -144,12 +146,11 @@ namespace Labb4
                         box = new Room(Symbols.Room, row, col);
                         boxList.Add(box);
                     }
-                    //}                    
                     else if (map[row, col] == '?')
                     {
                         Random random = new Random();
                         int roomType = random.Next(1, 8);
-                        //Thread.Sleep(2000);
+                        Thread.Sleep(2000);
                         Items items;
                         switch (roomType)
                         {
@@ -220,8 +221,6 @@ namespace Labb4
                             Console.Write((char)boxList[i].Symbol + " ");
                         }
                     }
-                    //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
-                    //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
                 }
                 Console.WriteLine();
             }
@@ -241,19 +240,6 @@ namespace Labb4
                 Console.WriteLine($"{item.Name,-12} {item.Count}");
             }
         }
-
-        //public bool CheckIfKeyIsAvailable()
-        //{
-        //    foreach (var item in players[players.Count - 1].itemsList)
-        //    {
-        //        if (item.GetType() == typeof(Key) || item.GetType() == typeof(SuperKey))
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
         public bool Play()
         {
             Console.Clear();
@@ -265,17 +251,12 @@ namespace Labb4
             {
                 case 'w':
                     return (Move(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol));
-                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow - 1, players[players.Count - 1].PositionCol);
-                //return true;
                 case 'a':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1));
-                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol - 1);
                 case 's':
                     return (Move(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol));
-                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow + 1, players[players.Count - 1].PositionCol);
                 case 'd':
                     return (Move(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1));
-                //CheckIfPositionisAvailable(players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol + 1);
                 case 'q':
                     Console.WriteLine("\n\nGame over, you have lost all your points!");
                     players[players.Count - 1].MovesLeft = 0;
@@ -315,16 +296,6 @@ namespace Labb4
             }
             return true;
         }
-
-        //public void CheckIfPositionisAvailable(int rowPosition, int colPosition)
-        //{
-
-        //    if (mapWithObjects[rowPosition, colPosition].IsBoxAvailable(players[players.Count - 1]))
-        //    {
-        //        players[players.Count - 1].ChangePosition(rowPosition, colPosition, mapWithObjects);
-        //    }
-        //}
-
         public void InstructionsForUser(string name)
         {
             Console.Clear();
@@ -332,14 +303,12 @@ namespace Labb4
                 $"\n\nThis is a maze game where you (@) can move around using the following keys on the keyboard: " +
                 $"\na (move left), d (move right), w (move up) and s (move down). " +
                 $"\nEvery move costs you a life point and your goal is to have as many as possible when you find the Exit(E)." +
-                $"\n\nDuring your adventure you can pick up a one - use keys(k) that can help you open Doors(D) to magical rooms" +
-                $"\nwhere you can see the objects you can pick up or find surprises(?)." +
+                $"\n\nDuring your adventure you can pick up a one - use keys(k) that can help you open Doors(D) to rooms" +
+                $"\nwhere you can see the objects, empty rooms (-) or surprises(?)." +
                 $"\n\nThere is also a special key(K) that you can use 3 times!" +
                 $"\nThe maze contains weapons: swords(s) and bombs(b) that you can use in order to kill evil Monsters(M)." +
                 $"\nFinding potions(p) will increase your life points, but watch out for the traps(t)!" +
-                $"\n\nGood luck!!" +
-                $"\n\nPress any key to start the game...");
-            Console.ReadKey(true);
+                $"\n\nGood luck!!");
         }
     }
 }
