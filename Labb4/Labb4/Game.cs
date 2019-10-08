@@ -35,14 +35,12 @@ namespace Labb4
         //    players.Add(newPlayer);
         //}
 
-        public void NewGame()
+        
+        internal void NewGame()
         {
-            Console.Write("Enter your name: ");
-            string name = Console.ReadLine();
-            //TODO: Validera namnet
-            players.Add(new Player(name, 100, 4, 4));
-            InstructionsForUser(name);
             CreateObjects();
+            AddPlayer();            
+
             Console.WriteLine("\nPress any key to start the game...");
             Console.ReadKey();
             bool play = true;
@@ -57,32 +55,63 @@ namespace Labb4
                 {
                     boxList.Clear();
                 }
-                // om objektet är Exit --> play = false
             }
 
             Console.Clear();
             Console.WriteLine("Does anyone else want to play? (yes/no)");
-            string answer = Console.ReadLine();
-            // TODO: Check if answer is yes eller no
-            if (answer == "yes")
+            bool invalidAnswer = true;
+            while (invalidAnswer)
             {
-                NewGame();
-            }
-            else
-            {
-                Console.WriteLine("Good bye");
-                // TODO: skriv ut highscores, sort objects by movesLeft descending with LINQ
-                foreach (var player in players)
+                string answer = Console.ReadLine().Trim().ToLower();
+                if (answer == "yes" || answer == "y")
                 {
-                    Console.WriteLine($"{player.Name} - {player.MovesLeft}");
+                    NewGame();
+                    invalidAnswer = false;
+                }
+                else if (answer == "no" || answer == "n")
+                {
+                    Console.WriteLine("\nGAME OVER!");
+                    PrintHighscores();
+                    invalidAnswer = false;
+                }
+                else
+                {
+                    Console.Write("Invalid! Write yes or no: ");
                 }
             }
         }
 
-        public void CreateObjects()
+        Player player;
+        private void AddPlayer()
+        {
+            Console.Write($"PLAYER {players.Count + 1}\nEnter your name: ");
+            string name = Console.ReadLine();
+            //TODO: Validera namnet
+            player = new Player(name, 100, 3, 3);
+            players.Add(player);
+        }
+
+        private void PrintHighscores()
+        {
+            var highscores = from player in players
+                             orderby player.MovesLeft descending
+                             select player;
+
+            Console.WriteLine($"\n---------------------------------\n| {"RANK",-4} |    {"PLAYER",-10}|  {"SCORE"}  |\n---------------------------------");
+            int rank = 1;
+            foreach (var player in highscores)
+            {
+                Console.WriteLine($"|   {rank,-2} | {player.Name,-12} | {player.MovesLeft,4}    |");
+                rank++;
+            }
+            Console.WriteLine($"---------------------------------");
+        }       
+
+        private void CreateObjects()
         {
 
             Box box;
+            Items item;
             for (int row = 0; row < map.GetLength(0); row++)
             {
                 for (int col = 0; col < map.GetLength(1); col++)
@@ -90,61 +119,49 @@ namespace Labb4
                     if (map[row, col] == '#')
                     {
                         box = new Wall(Symbols.Wall, row, col);
-                        boxList.Add(box);
-
                     }
                     else if (map[row, col] == 'D')
                     {
                         box = new Door(Symbols.Door, row, col);
-                        boxList.Add(box);
                     }
                     else if (map[row, col] == 'M')
                     {
                         Monster monster = new Monster();
                         box = new Room(Symbols.Monster, monster, row, col);
-                        boxList.Add(box);
                     }
                     else if (map[row, col] == 'k')
                     {
-                        Key key = new Key(1);
-                        box = new Room(Symbols.Key, key, row, col);
-                        boxList.Add(box);
+                        item = new Key(1);
+                        box = new Room(Symbols.Key, item, row, col);
                     }
                     else if (map[row, col] == 'K')
                     {
-                        SuperKey superKey = new SuperKey(3);
-                        box = new Room(Symbols.SuperKey, superKey, row, col);
-                        boxList.Add(box);
+                        item = new SuperKey(3);
+                        box = new Room(Symbols.SuperKey, item, row, col);
                     }
                     else if (map[row, col] == 's')
                     {
-                        Items items = new Sword(10);
-                        box = new Room(Symbols.Sword, items, row, col);
-                        boxList.Add(box);
-
+                        item = new Sword(10);
+                        box = new Room(Symbols.Sword, item, row, col);
                     }
                     else if (map[row, col] == 'b')
                     {
-                        Items items = new Bomb(1);
-                        box = new Room(Symbols.Bomb, items, row, col);
-                        boxList.Add(box);
+                        item = new Bomb(1);
+                        box = new Room(Symbols.Bomb, item, row, col);
                     }
                     else if (map[row, col] == 'p')
                     {
-                        Items items = new Potion(1);
-                        box = new Room(Symbols.Potion, items, row, col);
-                        boxList.Add(box);
+                        item = new Potion(1);
+                        box = new Room(Symbols.Potion, item, row, col);
                     }
                     else if (map[row, col] == 't')
                     {
-                        Items items = new Trap(1);
-                        box = new Room(Symbols.Trap, items, row, col);
-                        boxList.Add(box);
+                        item = new Trap(1);
+                        box = new Room(Symbols.Trap, item, row, col);
                     }
                     else if (map[row, col] == '-')
                     {
                         box = new Room(Symbols.Room, row, col);
-                        boxList.Add(box);
                     }
                     else if (map[row, col] == '?')
                     {
@@ -156,76 +173,95 @@ namespace Labb4
                         {
                             case 1:
                                 box = new Room(Symbols.Surprise, row, col);
-                                boxList.Add(box);
                                 break;
                             case 2:
                                 Monster monster = new Monster();
                                 box = new Room(Symbols.Surprise, monster, row, col);
-                                boxList.Add(box);
                                 break;
                             case 3:
-                                items = new Key(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Key(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 4:
-                                items = new Potion(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Potion(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 5:
-                                items = new Trap(1); // Change it so that it doesn't act as an item
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Trap(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 6:
-                                items = new Sword(10);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Sword(10);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             case 7:
-                                items = new Bomb(1);
-                                box = new Room(Symbols.Surprise, items, row, col);
-                                boxList.Add(box);
+                                item = new Bomb(1);
+                                box = new Room(Symbols.Surprise, item, row, col);
                                 break;
                             default:
                                 box = new Room(Symbols.Room, row, col);
-                                boxList.Add(box);
                                 break;
                         }
                     }
                     else
                     {
                         box = new Exit(Symbols.Exit, row, col);
-                        boxList.Add(box);
                     }
-                    mapWithObjects[row, col] = box;
+                    boxList.Add(box);
                 }
             }
         }
 
-        public void PrintMap()
+        private void PrintMap()
         {
-            for (int row = 0; row < map.GetLength(0); row++)
+            foreach (var box in boxList)
             {
-                for (int col = 0; col < map.GetLength(1); col++)
+                if (box.PositionX == player.PositionRow && box.PositionY == player.PositionCol)
                 {
-                    for (int i = 0; i < boxList.Count; i++)
-                    {
-                        if (boxList[i].PositionX == row && boxList[i].PositionY == col)
-                        {
-                            if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
-                            {
-                                boxList[i].Symbol = Symbols.Player;
-                            }
-                            Console.Write((char)boxList[i].Symbol + " ");
-                        }
-                    }
+                    box.Symbol = Symbols.Player;
                 }
-                Console.WriteLine();
+                if (box.PositionY == 0)
+                {
+                    Console.WriteLine();
+                }
+                if ((box.Symbol == Symbols.Player) ||
+                    (box is Wall) ||
+                    (box.PositionX == player.PositionRow && (box.PositionY == player.PositionCol - 1 || box.PositionY == player.PositionCol + 1)) ||
+                    (box.PositionY == player.PositionCol && (box.PositionX == player.PositionRow - 1 || box.PositionX == player.PositionRow + 1)))
+                {
+                    Console.Write($"{(char)box.Symbol} ");
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
             }
             Legend();
         }
+        //public void PrintMap()
+        //{
+        //    for (int row = 0; row < map.GetLength(0); row++)
+        //    {
+        //        for (int col = 0; col < map.GetLength(1); col++)
+        //        {
+        //            for (int i = 0; i < boxList.Count; i++)
+        //            {
+        //                if (boxList[i].PositionX == row && boxList[i].PositionY == col)
+        //                {
+        //                    if (boxList[i].PositionX == players[players.Count - 1].PositionRow && boxList[i].PositionY == players[players.Count - 1].PositionCol)
+        //                    {
+        //                        boxList[i].Symbol = Symbols.Player;
+        //                    }
+        //                    Console.Write((char)boxList[i].Symbol + " ");
+        //                }
+        //            }
+        //            //mapWithObjects[players[players.Count - 1].PositionRow, players[players.Count - 1].PositionCol].Symbol = Symbols.Player;
+        //            //Console.Write((char)mapWithObjects[row, col].Symbol + " ");
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //    Legend();
+        //}
 
         public void Legend()
         {
