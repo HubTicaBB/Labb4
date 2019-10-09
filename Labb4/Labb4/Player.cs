@@ -106,7 +106,7 @@ namespace Labb4
             bool inputValid = false;
             bool monsterIsDead = false;
             string input = null;
-            Console.WriteLine($"\nYou are aproaching a room with a monster.It has {newBox.Monster.Power} life points. " +
+            Console.WriteLine($"\nYou are aproaching a room with a monster. It has {newBox.Monster.Power} health points. " +
                 $"\nChoose a weapon to fight the beast!");
             while (!inputValid || !monsterIsDead)
             {
@@ -122,8 +122,8 @@ namespace Labb4
                                 newBox.Monster.Power -= 10;
                                 MovesLeft -= 5;
                                 Console.WriteLine("\nWow!That was a clever choice! \nThe bomb that you used killed the beast!" +
-                                    "\nUnfortunately you got injured so you lost 5 life points.");
-                                Thread.Sleep(3000);
+                                    "\nUnfortunately you got injured so you lost 5 health points.");
+                                Thread.Sleep(5000);
                                 if (newBox.Monster.Power <= 0)
                                 {
                                     monsterIsDead = true;
@@ -135,13 +135,13 @@ namespace Labb4
                         case "sword":
                             {
                                 newBox.Monster.Power -= 5;
-                                Console.WriteLine($"\nYou managed to damage the monster, so now it has {newBox.Monster.Power} life points." +
-                                $"\nBut you are trapped with the beast so you have to continue using your weapon until you destroy it!!");
+                                Console.WriteLine($"\nYou managed to damage the monster, so now it has {newBox.Monster.Power} health points." +
+                                $"\nBut you are trapped with the beast so you have to choose a weapon and continue until you destroy it!!");
                                 if (newBox.Monster.Power <= 0)
                                 {
                                     Console.WriteLine("\nThat was a difficult fight but you killed the evil beast! " +
                                         "\nYou got injured so you lost 5 life points, but you can continue your quest!");
-                                    Thread.Sleep(3000);
+                                    Thread.Sleep(5000);
                                     MovesLeft -= 5;
                                     monsterIsDead = true;
                                 }
@@ -175,7 +175,7 @@ namespace Labb4
                 {
                     MovesLeft += 5;
                     Console.WriteLine("\nCongratulations! You found a magic potion! That gives you 5 extra life points to complete your quest!");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                     item.NumberUsageItem -= 1;
                     if (item.NumberUsageItem == 0)
                     {
@@ -197,7 +197,7 @@ namespace Labb4
                     itemsList.Remove(item);
                     Console.WriteLine("\nOh noooo! You fell in a huge hole!\nThere is a wooden stair on the wall so you can climb back." +
                         "\nThat costs you 10 life points.");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                     return true;
                 }
             }

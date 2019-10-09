@@ -87,14 +87,14 @@ namespace Labb4
                              orderby player.MovesLeft descending
                              select player;
 
-            Console.WriteLine($"\n---------------------------------\n| {"RANK",-4} |    {"PLAYER",-10}|  {"SCORE"}  |\n---------------------------------");
+            Console.WriteLine($"\n--------------------------------------\n| {"RANK",-4} |    {"PLAYER",-15}|  {"SCORE"}  |\n--------------------------------------");
             int rank = 1;
             foreach (var player in highscores)
             {
-                Console.WriteLine($"|   {rank,-2} | {player.Name,-12} | {player.MovesLeft,4}    |");
+                Console.WriteLine($"|   {rank,-2} | {player.Name,-17} | {player.MovesLeft,4}    |");
                 rank++;
             }
-            Console.WriteLine($"---------------------------------");
+            Console.WriteLine($"--------------------------------------");
         }
 
         private void CreateObjects()
@@ -293,7 +293,7 @@ namespace Labb4
                     return false;
                 default:
                     Console.Write("\nInvalid input, try again!");
-                    Thread.Sleep(250);
+                    Thread.Sleep(500);
                     return true;
             }
         }
@@ -333,12 +333,12 @@ namespace Labb4
             Console.WriteLine($"Hello {name}! Welcome to the dungeon crawler!" +
                 $"\n\nThis is a maze game where you (@) can move around using the following keys on the keyboard: " +
                 $"\na (move left), d (move right), w (move up) and s (move down). " +
-                $"\nEvery move costs you a life point and your goal is to have as many as possible when you find the Exit(E)." +
-                $"\n\nDuring your adventure you can pick up one-use keys(k) that can help you open Doors(D) to rooms" +
-                $"\nwhere you can see the objects, empty rooms (-) or surprises(?)." +
-                $"\n\nThere is also a special key(K) that you can use 3 times!" +
-                $"\nThe maze contains weapons: swords(s) and bombs(b) that you can use in order to kill evil Monsters(M)." +
-                $"\nFinding potions(p) will increase your life points, but watch out for the traps(t)!" +
+                $"\nEvery move costs you a life point and your goal is to have as many as possible when you find the Exit (E)." +
+                $"\n\nDuring your adventure you can pick up one-use keys (k) that can help you open Doors (D) to rooms" +
+                $"\nwhere you can see the objects, empty rooms (-) or surprises (?)." +
+                $"\n\nThere is also a special key (K) that you can use 3 times!" +
+                $"\nThe maze contains weapons: swords (s) and bombs (b) that you can use in order to kill evil Monsters (M)." +
+                $"\nFinding potions (p) will increase your life points, but watch out for the traps (t)!" +
                 $"\n\nDuring the game you can press L at any time and that will show you the legend with all the symbols." +
                 $"\nOr you can press Q to exit game, but then you lose all you life points." +
                 $"\n\nGood luck!!");

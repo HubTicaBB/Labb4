@@ -6,7 +6,7 @@
 //--------------------------------
 //|   1  | Tijana      |   87    |
 //|   2  | Andreea     |   83    |
-//|   3  | Tijana      |   77    |
+//|   3  | Magnus      |   77    |
 //--------------------------------
 
 // Labb 4: Andreea Nenciu och Tijana Ilic
